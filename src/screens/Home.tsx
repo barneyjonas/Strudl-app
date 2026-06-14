@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppState } from '../store/appStore'
-import { VIENNA_CAFES } from '../data/viennaCafes'
 import StampCard from '../components/StampCard'
 
 const USER_LAT = 48.2082
