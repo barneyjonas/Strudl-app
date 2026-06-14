@@ -19,12 +19,8 @@ export default defineConfig({
         start_url: '/Strudl-app/',
         scope: '/Strudl-app/',
         icons: [
-          {
-            src: '/Strudl-app/Logo_Strudl_no_Background.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable'
-          }
+          { src: '/Strudl-app/icon-192.png', sizes: '192x192', type: 'image/png' },
+          { src: '/Strudl-app/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' }
         ]
       }
     })
