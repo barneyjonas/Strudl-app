@@ -103,6 +103,31 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       zoomEl.style.marginRight = '12px'
     }
 
+    // Walking radius circles: ~400m = 5 min, ~800m = 10 min at 80m/min
+    const circleStyle = { color: '#6b7280', weight: 1.5, dashArray: '6 6', fillOpacity: 0 }
+    const circle5 = L.circle([48.2082, 16.3738], { radius: 400, ...circleStyle }).addTo(map)
+    const circle10 = L.circle([48.2082, 16.3738], { radius: 800, ...circleStyle }).addTo(map)
+
+    // Labels for the radius circles
+    const labelStyle = 'background:transparent;border:none;box-shadow:none;font-size:11px;font-weight:600;color:#6b7280;white-space:nowrap;'
+    L.marker([48.2082 + 0.0036, 16.3738], {
+      icon: L.divIcon({ className: '', html: `<span style="${labelStyle}">5 Min</span>`, iconAnchor: [20, 6] }),
+      interactive: false,
+    }).addTo(map)
+    L.marker([48.2082 + 0.0072, 16.3738], {
+      icon: L.divIcon({ className: '', html: `<span style="${labelStyle}">10 Min</span>`, iconAnchor: [24, 6] }),
+      interactive: false,
+    }).addTo(map)
+
+    // User location dot
+    L.circleMarker([48.2082, 16.3738], {
+      radius: 7,
+      color: '#fff',
+      weight: 2,
+      fillColor: '#3b82f6',
+      fillOpacity: 1,
+    }).addTo(map)
+
     map.on('click', () => {
       onMapClickRef.current?.()
     })
@@ -186,10 +211,15 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       <button
         onClick={() => mapRef.current?.setView([48.2082, 16.3738], 13)}
         className="absolute left-3 bottom-[88px] z-[1001] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-[#dadada] p-2.5 active:scale-95 transition-transform"
-        title="Centre on Vienna"
+        title="Centre on location"
       >
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polygon points="3 11 22 2 13 21 11 13 3 11" />
+          <circle cx="12" cy="12" r="3" />
+          <circle cx="12" cy="12" r="8" />
+          <line x1="12" y1="2" x2="12" y2="5" />
+          <line x1="12" y1="19" x2="12" y2="22" />
+          <line x1="2" y1="12" x2="5" y2="12" />
+          <line x1="19" y1="12" x2="22" y2="12" />
         </svg>
       </button>
       {toast && (
