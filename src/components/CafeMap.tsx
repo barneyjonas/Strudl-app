@@ -103,6 +103,13 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       zoomEl.style.marginRight = '12px'
     }
 
+    // Push attribution above bottom nav
+    const attrEl = (map as any).attributionControl.getContainer() as HTMLElement | undefined
+    if (attrEl) {
+      attrEl.style.marginBottom = '88px'
+      attrEl.style.marginRight = '8px'
+    }
+
     // Walking radius circles: ~400m = 5 min, ~800m = 10 min at 80m/min
     const circleStyle = { color: '#6b7280', weight: 1.5, dashArray: '6 6', fillOpacity: 0 }
     L.circle([48.2082, 16.3738], { radius: 400, ...circleStyle }).addTo(map)
@@ -213,9 +220,12 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
         className="absolute left-3 bottom-[88px] z-[1001] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-[#dadada] p-2.5 active:scale-95 transition-transform"
         title="Centre on location"
       >
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="3" />
-          <circle cx="12" cy="12" r="8" />
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2" strokeLinecap="round">
+          {/* outer ring */}
+          <circle cx="12" cy="12" r="7" />
+          {/* centre dot */}
+          <circle cx="12" cy="12" r="2" fill="#0f0f0f" />
+          {/* tick marks */}
           <line x1="12" y1="2" x2="12" y2="5" />
           <line x1="12" y1="19" x2="12" y2="22" />
           <line x1="2" y1="12" x2="5" y2="12" />
