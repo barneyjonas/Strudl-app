@@ -4,7 +4,7 @@ interface StampCardProps {
 }
 
 const CoffeeCupIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" overflow="visible">
+  <svg width="22" height="22" viewBox="0 -2 24 26" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 8h1a4 4 0 010 8h-1" />
     <path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z" />
     <line x1="8" y1="1" x2="8" y2="4" />
@@ -31,12 +31,12 @@ export default function StampCard({ stamps, total = 10 }: StampCardProps) {
                 key={i}
                 className={`aspect-square rounded-full flex items-center justify-center transition-all duration-500 ${
                   isRewardReady
-                    ? 'bg-[#D97706] animate-pulse'
-                    : 'border-2 border-dashed border-[#D97706] opacity-50'
+                    ? 'bg-[#E6C828] animate-pulse'
+                    : 'border-2 border-dashed border-[#E6C828]'
                 }`}
               >
-                <span className={`text-[8px] font-black leading-none tracking-tight ${
-                  isRewardReady ? 'text-white' : 'text-[#D97706]'
+                <span className={`text-[9px] font-black leading-none tracking-tight ${
+                  isRewardReady ? 'text-black' : 'text-[#E6C828]'
                 }`}>FREE</span>
               </div>
             )
