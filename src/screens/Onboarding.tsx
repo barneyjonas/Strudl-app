@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useAppState } from '../store/appStore'
+import logo from '/Logo_Strudl_no_Background.svg'
 
 export default function Onboarding() {
   const [, setAppState] = useAppState()
@@ -20,7 +21,7 @@ export default function Onboarding() {
     <div className="app-shell flex flex-col items-center justify-center min-h-screen px-6 bg-white">
       {step === 1 && (
         <div className="flex flex-col items-center text-center w-full max-w-xs gap-6 -mt-12">
-          <img src="/Logo_Strudl_no_Background.svg" alt="Strudl" className="w-64 h-64" />
+          <img src={logo} alt="Strudl" className="w-64 h-64" />
           <div className="flex flex-col gap-3 -mt-20">
             <p className="text-4xl font-black text-[#0f0f0f] leading-tight" style={{ letterSpacing: '-0.03em' }}>
               Strudl, drink<br />like a local.
