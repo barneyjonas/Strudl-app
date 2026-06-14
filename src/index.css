@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+  }
+
+  body {
+    background: radial-gradient(circle at top left, rgba(0,0,0,0.04), transparent 22%),
+                radial-gradient(circle at top right, rgba(0,0,0,0.03), transparent 20%),
+                #f6f6f6;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    color: #0f0f0f;
+  }
+
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; -ms-overflow-style: none; }
+
+  :focus-visible {
+    outline: 2px solid #000000;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+@layer components {
+  .app-shell {
+    max-width: 430px;
+    margin-left: auto;
+    margin-right: auto;
+    min-height: 100svh;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 80px rgba(0,0,0,0.10);
+  }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slide-up 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Leaflet popup overrides (matches landing page) ── */
+.leaflet-popup-content-wrapper {
+  border-radius: 20px !important;
+  box-shadow: 0 20px 48px rgba(0,0,0,0.13), 0 1px 0 rgba(0,0,0,0.05) !important;
+  border: 1px solid rgba(0,0,0,0.07) !important;
+  padding: 0 !important;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+  padding: 18px 20px !important;
+}
+.leaflet-popup-tip-container { display: none !important; }
+.leaflet-popup-close-button {
+  top: 10px !important;
+  right: 14px !important;
+  font-size: 1.1rem !important;
+  color: #aaa !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+}
+.leaflet-popup-close-button:hover { color: #000 !important; }
+
+.strudl-map-popup { min-width: 180px; }
+
+.strudl-map-popup-name {
+  font-size: 0.97rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+  color: #0f0f0f;
+}
+
+.strudl-map-loyal-badge {
+  display: inline-block;
+  background: rgba(217, 119, 6, 0.12);
+  color: #92400E;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.strudl-map-popup-addr {
+  color: #5f5f5f;
+  font-size: 0.83rem;
+  margin-bottom: 10px;
+}
+
+.strudl-map-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
+.strudl-map-tag {
+  font-size: 0.74rem;
+  border: 1px solid #dadada;
+  border-radius: 999px;
+  padding: 3px 9px;
+  background: #f6f6f6;
+  color: #0f0f0f;
+}
+
+.strudl-map-popup-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.strudl-map-visit-btn {
+  flex: 1;
+  text-align: center;
+  background: #f6f6f6;
+  color: #0f0f0f;
+  border: 1px solid #dadada;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.strudl-map-visit-btn:hover { background: #ededed; }
+
+.strudl-map-directions-btn {
+  flex: 1;
+  display: block;
+  text-align: center;
+  background: #000;
+  color: #fff;
+  border-radius: 999px;
+  padding: 8px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.strudl-map-directions-btn:hover { background: #222; }
+
+.strudl-map-save-btn {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f6f6;
+  border: 1px solid #dadada;
+  border-radius: 999px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.strudl-map-save-btn:hover { background: #ededed; }
+.strudl-map-save-btn.saved { background: #fef3c7; border-color: #D97706; }
