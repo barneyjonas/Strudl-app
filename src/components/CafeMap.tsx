@@ -31,7 +31,7 @@ function makeMarkerIcon(state: MarkerState): L.DivIcon {
 function makePopupContent(cafe: CafePin, isLoyal: boolean, isSaved: boolean): string {
   const tags = cafe.tags.map(t => `<span class="strudl-map-tag">${t}</span>`).join('')
   const loyalBadge = isLoyal ? `<div class="strudl-map-loyal-badge">Your café ✓</div>` : ''
-  const directionsUrl = `https://www.openstreetmap.org/directions?from=48.2082,16.3738&to=${cafe.lat},${cafe.lng}`
+  const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${cafe.lat},${cafe.lng}`
   const bookmarkSvg = isSaved
     ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="#D97706" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"></path></svg>`
     : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"></path></svg>`
@@ -47,10 +47,19 @@ function makePopupContent(cafe: CafePin, isLoyal: boolean, isSaved: boolean): st
   </div>`
 }
 
+const DEFAULT_LAT = 48.2082
+const DEFAULT_LNG = 16.3738
+
 export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggle, onCafeSelect, onMapClick, fullScreen = false, height }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<L.Map | null>(null)
   const markersRef = useRef<Map<string, L.Marker>>(new Map())
+  const userDotRef = useRef<L.CircleMarker | null>(null)
+  const circle5Ref = useRef<L.Circle | null>(null)
+  const circle10Ref = useRef<L.Circle | null>(null)
+  const label5Ref = useRef<L.Marker | null>(null)
+  const label10Ref = useRef<L.Marker | null>(null)
+  const userLatLngRef = useRef<[number, number]>([DEFAULT_LAT, DEFAULT_LNG])
   const savedCafeIdsRef = useRef(savedCafeIds)
   savedCafeIdsRef.current = savedCafeIds
   const onSaveToggleRef = useRef(onSaveToggle)
@@ -67,6 +76,10 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
     setToast(msg)
     toastTimerRef.current = setTimeout(() => setToast(null), 2000)
   })
+
+  const flyToUser = () => {
+    if (mapRef.current) mapRef.current.flyTo(userLatLngRef.current, 15, { duration: 1 })
+  }
 
   useEffect(() => {
     ;(window as any).__strudlToggleSave = (cafeId: string) => {
@@ -85,7 +98,7 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
     const map = L.map(containerRef.current, {
       scrollWheelZoom: false,
       zoomControl: false,
-    }).setView([48.2082, 16.3738], 12)
+    }).setView([DEFAULT_LAT, DEFAULT_LNG], 13)
 
     mapRef.current = map
 
@@ -103,37 +116,52 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       zoomEl.style.marginRight = '12px'
     }
 
-    // Push attribution above bottom nav
     const attrEl = (map as any).attributionControl.getContainer() as HTMLElement | undefined
     if (attrEl) {
       attrEl.style.marginBottom = '88px'
       attrEl.style.marginRight = '8px'
     }
 
-    // Walking radius circles: ~400m = 5 min, ~800m = 10 min at 80m/min
     const circleStyle = { color: '#6b7280', weight: 1.5, dashArray: '6 6', fillOpacity: 0 }
-    L.circle([48.2082, 16.3738], { radius: 400, ...circleStyle }).addTo(map)
-    L.circle([48.2082, 16.3738], { radius: 800, ...circleStyle }).addTo(map)
+    circle5Ref.current = L.circle([DEFAULT_LAT, DEFAULT_LNG], { radius: 400, ...circleStyle }).addTo(map)
+    circle10Ref.current = L.circle([DEFAULT_LAT, DEFAULT_LNG], { radius: 800, ...circleStyle }).addTo(map)
 
-    // Labels for the radius circles
     const labelStyle = 'background:transparent;border:none;box-shadow:none;font-size:11px;font-weight:600;color:#6b7280;white-space:nowrap;'
-    L.marker([48.2082 + 0.0036, 16.3738], {
+    label5Ref.current = L.marker([DEFAULT_LAT + 0.0036, DEFAULT_LNG], {
       icon: L.divIcon({ className: '', html: `<span style="${labelStyle}">5 Min</span>`, iconAnchor: [20, 6] }),
       interactive: false,
     }).addTo(map)
-    L.marker([48.2082 + 0.0072, 16.3738], {
+    label10Ref.current = L.marker([DEFAULT_LAT + 0.0072, DEFAULT_LNG], {
       icon: L.divIcon({ className: '', html: `<span style="${labelStyle}">10 Min</span>`, iconAnchor: [24, 6] }),
       interactive: false,
     }).addTo(map)
 
-    // User location dot
-    L.circleMarker([48.2082, 16.3738], {
-      radius: 7,
+    userDotRef.current = L.circleMarker([DEFAULT_LAT, DEFAULT_LNG], {
+      radius: 8,
       color: '#fff',
-      weight: 2,
+      weight: 2.5,
       fillColor: '#3b82f6',
       fillOpacity: 1,
     }).addTo(map)
+
+    // Request real GPS
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const lat = pos.coords.latitude
+          const lng = pos.coords.longitude
+          userLatLngRef.current = [lat, lng]
+          userDotRef.current?.setLatLng([lat, lng])
+          circle5Ref.current?.setLatLng([lat, lng])
+          circle10Ref.current?.setLatLng([lat, lng])
+          label5Ref.current?.setLatLng([lat + 0.0036, lng])
+          label10Ref.current?.setLatLng([lat + 0.0072, lng])
+          map.flyTo([lat, lng], 15, { duration: 1.5 })
+        },
+        () => { /* permission denied — keep Vienna default */ },
+        { enableHighAccuracy: true, timeout: 10000 }
+      )
+    }
 
     map.on('click', () => {
       onMapClickRef.current?.()
@@ -166,6 +194,11 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       map.remove()
       mapRef.current = null
       markersRef.current.clear()
+      userDotRef.current = null
+      circle5Ref.current = null
+      circle10Ref.current = null
+      label5Ref.current = null
+      label10Ref.current = null
     }
   }, [])
 
@@ -205,7 +238,7 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       )}
       <div ref={containerRef} className="w-full h-full" />
       <button
-        onClick={() => mapRef.current?.setView([48.2082, 16.3738], 13)}
+        onClick={flyToUser}
         className="absolute left-3 bottom-[88px] z-[1001] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-[#dadada] p-2.5 active:scale-95 transition-transform"
         title="Centre on location"
       >
