@@ -162,18 +162,7 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       setLoading(false)
     }, 300)
 
-    const el = containerRef.current
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length < 2) map.dragging.disable()
-      else map.dragging.enable()
-    }
-    const onTouchEnd = () => map.dragging.enable()
-    el.addEventListener('touchstart', onTouchStart, { passive: true })
-    el.addEventListener('touchend', onTouchEnd, { passive: true })
-
     return () => {
-      el.removeEventListener('touchstart', onTouchStart)
-      el.removeEventListener('touchend', onTouchEnd)
       map.remove()
       mapRef.current = null
       markersRef.current.clear()
