@@ -105,8 +105,8 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
 
     // Walking radius circles: ~400m = 5 min, ~800m = 10 min at 80m/min
     const circleStyle = { color: '#6b7280', weight: 1.5, dashArray: '6 6', fillOpacity: 0 }
-    const circle5 = L.circle([48.2082, 16.3738], { radius: 400, ...circleStyle }).addTo(map)
-    const circle10 = L.circle([48.2082, 16.3738], { radius: 800, ...circleStyle }).addTo(map)
+    L.circle([48.2082, 16.3738], { radius: 400, ...circleStyle }).addTo(map)
+    L.circle([48.2082, 16.3738], { radius: 800, ...circleStyle }).addTo(map)
 
     // Labels for the radius circles
     const labelStyle = 'background:transparent;border:none;box-shadow:none;font-size:11px;font-weight:600;color:#6b7280;white-space:nowrap;'
