@@ -24,16 +24,6 @@ const ProfileIcon = ({ active }: { active: boolean }) => (
   </svg>
 )
 
-const ScanIcon = () => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="3" y="3" width="5" height="5" rx="1" />
-    <rect x="16" y="3" width="5" height="5" rx="1" />
-    <rect x="3" y="16" width="5" height="5" rx="1" />
-    <line x1="21" y1="16" x2="21" y2="21" />
-    <line x1="16" y1="21" x2="21" y2="21" />
-    <line x1="16" y1="16" x2="16" y2="16" strokeWidth="3" strokeLinecap="round" />
-  </svg>
-)
 
 export default function BottomNav() {
   const location = useLocation()
@@ -42,7 +32,7 @@ export default function BottomNav() {
 
   const tabs = [
     { path: '/discover', label: 'Discover', icon: (a: boolean) => <DiscoverIcon active={a} /> },
-    { path: '/home', label: 'Cafés', icon: (a: boolean) => <CafeIcon active={a} />, scanFab: true },
+    { path: '/home', label: 'Cafés', icon: (a: boolean) => <CafeIcon active={a} /> },
     { path: '/profile', label: 'Profile', icon: (a: boolean) => <ProfileIcon active={a} /> },
   ]
 
@@ -52,29 +42,17 @@ export default function BottomNav() {
         {tabs.map((tab) => {
           const isActive = path === tab.path
           return (
-            <div key={tab.path} className="relative flex flex-col items-center min-w-[56px]">
-              {tab.scanFab && (
-                <div className="absolute left-1/2 -translate-x-1/2 -top-14 z-10">
-                  <button
-                    onClick={() => navigate('/scan')}
-                    aria-label="Scan stamp"
-                    className="w-[52px] h-[52px] rounded-full bg-black flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.35)] border-2 border-white active:scale-95 transition-transform"
-                  >
-                    <ScanIcon />
-                  </button>
-                </div>
-              )}
-              <button
-                onClick={() => navigate(tab.path)}
-                className="flex flex-col items-center gap-1 active:scale-95 transition-transform"
-                aria-label={tab.label}
-              >
-                {tab.icon(isActive)}
-                <span className={`text-[10px] font-medium ${isActive ? 'text-black' : 'text-[#9ca3af]'}`}>
-                  {tab.label}
-                </span>
-              </button>
-            </div>
+            <button
+              key={tab.path}
+              onClick={() => navigate(tab.path)}
+              className="flex flex-col items-center gap-1 active:scale-95 transition-transform min-w-[56px]"
+              aria-label={tab.label}
+            >
+              {tab.icon(isActive)}
+              <span className={`text-[10px] font-medium ${isActive ? 'text-black' : 'text-[#9ca3af]'}`}>
+                {tab.label}
+              </span>
+            </button>
           )
         })}
       </div>

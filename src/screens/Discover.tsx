@@ -152,13 +152,79 @@ function getCafeFeatureIcons(cafe: CafePin): FeatureIcon[] {
   return all.filter(Boolean).slice(0, 5) as FeatureIcon[]
 }
 
+function NavChooser({ lat, lng, onClose }: { lat: number; lng: number; onClose: () => void }) {
+  const apps = [
+    {
+      label: 'Google Maps',
+      url: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Waze',
+      url: `https://waze.com/ul?ll=${lat},${lng}&navigate=yes`,
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <circle cx="12" cy="10" r="7" />
+          <path d="M9 10h.01M15 10h.01" strokeWidth="3" strokeLinecap="round" />
+          <path d="M9.5 13.5s.8 1.5 2.5 1.5 2.5-1.5 2.5-1.5" />
+          <path d="M8 19l-1 3M16 19l1 3" />
+        </svg>
+      ),
+    },
+    {
+      label: 'Apple Maps',
+      url: `https://maps.apple.com/?daddr=${lat},${lng}&dirflg=d`,
+      icon: (
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="3 11 22 2 13 21 11 13 3 11" />
+        </svg>
+      ),
+    },
+  ]
+
+  return (
+    <div className="fixed inset-0 z-[3000] flex items-end justify-center" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/30" />
+      <div
+        className="relative w-full max-w-[430px] bg-white rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.2)] pb-8 pt-4 px-5"
+        onClick={e => e.stopPropagation()}
+      >
+        <div className="flex justify-center mb-4">
+          <div className="w-10 h-1 bg-[#dadada] rounded-full" />
+        </div>
+        <p className="text-xs font-semibold text-[#9ca3af] uppercase tracking-wider mb-3">Open directions in…</p>
+        <div className="flex flex-col gap-2">
+          {apps.map(app => (
+            <a
+              key={app.label}
+              href={app.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={onClose}
+              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-[#dadada] text-[#0f0f0f] font-semibold text-sm active:bg-[#f6f6f6] transition-colors"
+            >
+              {app.icon}
+              {app.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
   const [showAbout, setShowAbout] = useState(false)
+  const [showNavChooser, setShowNavChooser] = useState(false)
   const distKm = getDistanceKm(cafe.lat, cafe.lng)
-  const directionsUrl = `https://www.openstreetmap.org/directions?from=${USER_LAT},${USER_LNG}&to=${cafe.lat},${cafe.lng}`
   const featureIcons = getCafeFeatureIcons(cafe)
 
   return (
+    <>
     <div className="absolute bottom-0 left-0 right-0 z-[2000] bg-white rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] animate-slide-up max-h-[75vh] overflow-y-auto">
       {/* Handle */}
       <div className="flex justify-center pt-3 pb-1 sticky top-0 bg-white">
@@ -262,17 +328,15 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
 
         {/* Action buttons */}
         <div className="flex gap-2 mb-4">
-          <a
-            href={directionsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => setShowNavChooser(true)}
             className="flex-1 flex items-center justify-center gap-1.5 border border-[#dadada] text-[#0f0f0f] font-semibold text-sm py-3 rounded-full active:scale-95 transition-transform"
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="3 11 22 2 13 21 11 13 3 11" />
             </svg>
             Directions
-          </a>
+          </button>
 
           <button
             onClick={onSave}
@@ -329,6 +393,15 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
         )}
       </div>
     </div>
+
+    {showNavChooser && (
+      <NavChooser
+        lat={cafe.lat}
+        lng={cafe.lng}
+        onClose={() => setShowNavChooser(false)}
+      />
+    )}
+    </>
   )
 }
 
