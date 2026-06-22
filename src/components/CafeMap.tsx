@@ -112,13 +112,13 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
     zoom.addTo(map)
     const zoomEl = zoom.getContainer()
     if (zoomEl) {
-      zoomEl.style.marginBottom = '80px'
+      zoomEl.style.marginBottom = '92px'
       zoomEl.style.marginRight = '12px'
     }
 
     const attrEl = (map as any).attributionControl.getContainer() as HTMLElement | undefined
     if (attrEl) {
-      attrEl.style.marginBottom = '58px'
+      attrEl.style.marginBottom = '72px'
       attrEl.style.marginRight = '8px'
     }
 
@@ -239,7 +239,7 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       <div ref={containerRef} className="w-full h-full" />
       <button
         onClick={flyToUser}
-        className="absolute left-3 bottom-[62px] z-[1001] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-[#dadada] p-2.5 active:scale-95 transition-transform"
+        className="absolute left-3 bottom-[76px] z-[1001] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-[#dadada] p-2.5 active:scale-95 transition-transform"
         title="Centre on location"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2" strokeLinecap="round">
