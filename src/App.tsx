@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAppState } from './store/appStore'
 import BottomNav from './components/BottomNav'
 import Onboarding from './screens/Onboarding'
@@ -24,7 +24,8 @@ export default function App() {
   return (
     <div className="app-shell">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/discover" replace />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/scan" element={<Scan />} />
         <Route path="/rewards" element={<Rewards />} />
         <Route path="/discover" element={<Discover />} />
