@@ -40,51 +40,43 @@ export default function BottomNav() {
   const navigate = useNavigate()
   const path = location.pathname
 
-  const leftTabs = [
+  const tabs = [
     { path: '/discover', label: 'Discover', icon: (a: boolean) => <DiscoverIcon active={a} /> },
-  ]
-  const rightTabs = [
-    { path: '/home', label: 'Cafés', icon: (a: boolean) => <CafeIcon active={a} /> },
+    { path: '/home', label: 'Cafés', icon: (a: boolean) => <CafeIcon active={a} />, scanFab: true },
     { path: '/profile', label: 'Profile', icon: (a: boolean) => <ProfileIcon active={a} /> },
   ]
-
-  const renderTab = (tab: { path: string; label: string; icon: (a: boolean) => React.ReactNode }) => {
-    const isActive = path === tab.path
-    return (
-      <button
-        key={tab.path}
-        onClick={() => navigate(tab.path)}
-        className="flex flex-col items-center gap-1 active:scale-95 transition-transform min-w-[56px]"
-        aria-label={tab.label}
-      >
-        {tab.icon(isActive)}
-        <span className={`text-[10px] font-medium ${isActive ? 'text-black' : 'text-[#9ca3af]'}`}>
-          {tab.label}
-        </span>
-      </button>
-    )
-  }
 
   return (
     <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white/80 backdrop-blur-xl border-t border-[#dadada] z-[1000]">
       <div className="flex items-end justify-around px-2 pt-2 pb-5">
-        {leftTabs.map(renderTab)}
-
-        {/* Floating scan FAB above Cafés */}
-        <div className="relative flex flex-col items-center min-w-[56px]">
-          <button
-            onClick={() => navigate('/scan')}
-            aria-label="Scan stamp"
-            className="absolute -top-10 w-[52px] h-[52px] rounded-full bg-black flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.35)] active:scale-95 transition-transform border-2 border-white"
-          >
-            <ScanIcon />
-          </button>
-          {/* spacer so the row height stays consistent */}
-          <div className="w-[22px] h-[22px]" />
-          <span className="text-[10px] font-medium text-[#9ca3af]"> </span>
-        </div>
-
-        {rightTabs.map(renderTab)}
+        {tabs.map((tab) => {
+          const isActive = path === tab.path
+          return (
+            <div key={tab.path} className="relative flex flex-col items-center min-w-[56px]">
+              {tab.scanFab && (
+                <div className="absolute left-1/2 -translate-x-1/2 -top-14 z-10">
+                  <button
+                    onClick={() => navigate('/scan')}
+                    aria-label="Scan stamp"
+                    className="w-[52px] h-[52px] rounded-full bg-black flex items-center justify-center shadow-[0_4px_16px_rgba(0,0,0,0.35)] border-2 border-white active:scale-95 transition-transform"
+                  >
+                    <ScanIcon />
+                  </button>
+                </div>
+              )}
+              <button
+                onClick={() => navigate(tab.path)}
+                className="flex flex-col items-center gap-1 active:scale-95 transition-transform"
+                aria-label={tab.label}
+              >
+                {tab.icon(isActive)}
+                <span className={`text-[10px] font-medium ${isActive ? 'text-black' : 'text-[#9ca3af]'}`}>
+                  {tab.label}
+                </span>
+              </button>
+            </div>
+          )
+        })}
       </div>
     </nav>
   )
