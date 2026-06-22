@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/Strudl-app/sw.js', { scope: '/Strudl-app/' })})}
