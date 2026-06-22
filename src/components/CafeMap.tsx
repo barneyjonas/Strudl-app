@@ -112,8 +112,8 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
     zoom.addTo(map)
     const zoomEl = zoom.getContainer()
     if (zoomEl) {
-      zoomEl.style.marginBottom = '92px'
-      zoomEl.style.marginRight = '12px'
+      zoomEl.style.marginBottom = '3px'
+      zoomEl.style.marginRight = '8px'
     }
 
     const attrEl = (map as any).attributionControl.getContainer() as HTMLElement | undefined
