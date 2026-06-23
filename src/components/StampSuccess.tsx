@@ -77,14 +77,14 @@ export default function StampSuccess({ stamps, total = 9 }: Props) {
       {/* Result text */}
       <div>
         <p className="text-[#FDFAF5] font-bold text-5xl mb-1 ss-text-1" style={{ letterSpacing: '-0.04em' }}>+1</p>
-        <p className="text-[#FDFAF5] font-bold text-2xl ss-text-1" style={{ letterSpacing: '-0.02em' }}>stamp!</p>
+        <p className="text-[#FDFAF5] font-semibold text-2xl ss-text-1" style={{ letterSpacing: '-0.02em' }}>stamp</p>
         {isRewardReady ? (
           <p className="text-[#E6C828] font-semibold text-sm mt-2 ss-text-2">
-            9 / 9 — your free coffee is ready!
+            Your free coffee is ready.
           </p>
         ) : (
           <p className="text-white/40 text-sm mt-2 ss-text-2">
-            <span className="ss-count">{stamps}</span> / {total} collected
+            <span className="ss-count">{stamps}</span> of {total} — you were here.
           </p>
         )}
       </div>
@@ -96,7 +96,7 @@ export default function StampSuccess({ stamps, total = 9 }: Props) {
           className="bg-[#D97706] text-white font-bold text-base py-4 px-12 rounded-full active:scale-95 transition-transform shadow-[0_14px_30px_rgba(217,119,6,0.35)] border border-[#D97706] ss-done"
           aria-label="Claim your free coffee"
         >
-          Claim free coffee
+          Claim coffee
         </button>
       ) : (
         <button

@@ -68,7 +68,7 @@ export default function Scan() {
             <path d="M19 12H5M12 5l-7 7 7 7" />
           </svg>
         </button>
-        <h1 className="text-[#FDFAF5] font-semibold text-base ml-4">Scan QR Code</h1>
+        <h1 className="text-[#FDFAF5] font-semibold text-base ml-4">At the café?</h1>
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center px-8 pb-32">

@@ -130,8 +130,8 @@ export default function Profile() {
             <div className="h-px bg-[#E8E2D8]" />
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#1A1815] text-sm font-medium">Lapsed reminders</p>
-                <p className="text-[#7A7060] text-xs mt-0.5">Nudge when you haven't visited</p>
+                <p className="text-[#1A1815] text-sm font-medium">Gentle nudges</p>
+                <p className="text-[#7A7060] text-xs mt-0.5">When it's been a while</p>
               </div>
               <Toggle
                 checked={user.notifyLapsed}

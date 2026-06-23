@@ -86,7 +86,7 @@ export default function Rewards() {
           </div>
 
           <p className="text-[#7A7060] text-xs text-center mt-5 mb-8 leading-relaxed">
-            Show this code to your barista.<br />They'll scan it to redeem your reward.
+            Show this to your barista.
           </p>
 
           <button
@@ -94,7 +94,7 @@ export default function Rewards() {
             className="w-full bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-4 rounded-2xl active:scale-[0.98] transition-transform"
             style={{ boxShadow: '0 8px 24px rgba(26,24,21,0.22)' }}
           >
-            Mark as redeemed
+            Enjoy.
           </button>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function Rewards() {
       <div className="px-5 pt-14 pb-32">
 
         <h1 className="text-[#1A1815] font-bold text-2xl mb-1">Rewards</h1>
-        <p className="text-[#7A7060] text-sm mb-8">Collect anywhere. Redeem anywhere.</p>
+        <p className="text-[#7A7060] text-sm mb-8">Every coffee remembered.</p>
 
         {/* Stamp card */}
         <div className="mb-6">
@@ -150,7 +150,7 @@ export default function Rewards() {
             onClick={() => setShowHistory(!showHistory)}
             className="w-full flex items-center justify-between py-3 active:scale-[0.98] transition-transform"
           >
-            <h2 className="text-[11px] font-semibold tracking-wide uppercase text-[#7A7060]">Past rewards</h2>
+            <h2 className="text-[11px] font-semibold tracking-wide uppercase text-[#7A7060]">History</h2>
             <svg
               width="16" height="16" viewBox="0 0 24 24" fill="none"
               stroke="#7A7060" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
@@ -163,7 +163,7 @@ export default function Rewards() {
           {showHistory && (
             <div className="flex flex-col gap-2 mt-2">
               {pastRewards.length === 0 ? (
-                <p className="text-[#7A7060] text-sm py-4 text-center">No rewards redeemed yet</p>
+                <p className="text-[#7A7060] text-sm py-4 text-center">Nothing yet. Keep going.</p>
               ) : (
                 pastRewards.map((r) => (
                   <div key={r.id}

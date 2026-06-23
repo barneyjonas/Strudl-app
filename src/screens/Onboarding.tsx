@@ -34,7 +34,7 @@ export default function Onboarding() {
               Drink like<br />a local.
             </h1>
             <p className="text-[#7A7060] text-sm leading-relaxed">
-              Collect stamps at any café.<br />Earn free coffee. No cards, no fuss.
+              Collect stamps at the cafés you love.<br />Earn free coffee. No cards, no apps to juggle.
             </p>
           </div>
 
@@ -52,7 +52,7 @@ export default function Onboarding() {
         <div className="flex flex-col w-full max-w-xs gap-6">
           <div>
             <h2 className="text-2xl font-bold text-[#1A1815]">Who are you?</h2>
-            <p className="text-[#7A7060] text-sm mt-1">We'll personalise your experience.</p>
+            <p className="text-[#7A7060] text-sm mt-1">So we know who to greet.</p>
           </div>
 
           <div className="flex flex-col gap-3">
@@ -87,7 +87,7 @@ export default function Onboarding() {
         <div className="flex flex-col w-full max-w-xs gap-6">
           <div>
             <h2 className="text-2xl font-bold text-[#1A1815]">One last thing</h2>
-            <p className="text-[#7A7060] text-sm mt-1">These help us give you the best experience.</p>
+            <p className="text-[#7A7060] text-sm mt-1">Two small things that make a big difference.</p>
           </div>
 
           <div className="flex flex-col gap-3">

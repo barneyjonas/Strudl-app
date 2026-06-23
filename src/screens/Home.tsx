@@ -39,7 +39,7 @@ export default function Home() {
       <div className="px-5 pt-14 pb-32">
 
         {/* Greeting */}
-        <p className="text-[#7A7060] text-sm mb-5">Good coffee, {firstName}.</p>
+        <p className="text-[#1A1815] font-medium text-base mb-5">Good to see you, {firstName}.</p>
 
         {/* Hero stamp card */}
         <div className="mb-6">
@@ -59,13 +59,13 @@ export default function Home() {
             <rect x="3" y="14" width="7" height="7" rx="1" />
             <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z" />
           </svg>
-          Collect a stamp
+          Scan
         </button>
 
         {/* Your cafés */}
         {favoriteCafes.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-[#1A1815] font-semibold text-sm mb-4 tracking-wide uppercase text-[11px] text-[#7A7060]">Your cafés</h2>
+            <h2 className="text-[11px] font-semibold tracking-wide uppercase text-[#7A7060] mb-4">Your regulars</h2>
             <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
               {favoriteCafes.map((cafe) => (
                 <div key={cafe.id}
@@ -97,7 +97,7 @@ export default function Home() {
         {/* Saved cafés */}
         {savedWithDist.length > 0 && (
           <div>
-            <h2 className="text-[11px] font-semibold tracking-wide uppercase text-[#7A7060] mb-4">Saved</h2>
+            <h2 className="text-[11px] font-semibold tracking-wide uppercase text-[#7A7060] mb-4">Places to try</h2>
             <div className="flex flex-col gap-2">
               {savedWithDist.map((cafe) => (
                 <div key={cafe.id}
@@ -151,8 +151,7 @@ export default function Home() {
               </svg>
             </div>
             <div>
-              <p className="text-[#1A1815] text-sm font-medium">No cafés yet</p>
-              <p className="text-[#7A7060] text-xs mt-1 leading-relaxed">Discover cafés on the map<br />and scan to collect stamps</p>
+              <p className="text-[#1A1815] text-sm font-medium">Your first café is out there.</p>
             </div>
           </div>
         )}
