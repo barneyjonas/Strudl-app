@@ -1,6 +1,43 @@
-import React, { lazy, Suspense, useState } from 'react'
+import React, { lazy, Suspense, useCallback, useState } from 'react'
 import { useAppState } from '../store/appStore'
 import { VIENNA_CAFES, type CafeAbout, type CafePin } from '../data/viennaCafes'
+
+function dispatchSheetEvent(open: boolean) {
+  window.dispatchEvent(new CustomEvent('strudl_sheet_open', { detail: { open } }))
+}
+
+function isOpenNow(openHours: string): boolean | null {
+  const now = new Date()
+  const day = now.getDay()
+  const hour = now.getHours() + now.getMinutes() / 60
+  const dayMap: Record<string, number> = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 0 }
+  for (const segment of openHours.split(',').map(s => s.trim())) {
+    const lastSpace = segment.lastIndexOf(' ')
+    if (lastSpace === -1) continue
+    const dayPart = segment.slice(0, lastSpace)
+    const timeParts = segment.slice(lastSpace + 1).split('–')
+    if (timeParts.length !== 2) continue
+    const parseTime = (t: string) => { const [h, m] = t.split(':').map(Number); return h + (m || 0) / 60 }
+    const openTime = parseTime(timeParts[0])
+    const closeTime = parseTime(timeParts[1])
+    let dayApplies = false
+    if (dayPart === 'Daily') {
+      dayApplies = true
+    } else {
+      const parts = dayPart.split('–')
+      if (parts.length === 2) {
+        const s = dayMap[parts[0].trim()], e = dayMap[parts[1].trim()]
+        if (s !== undefined && e !== undefined)
+          dayApplies = s <= e ? day >= s && day <= e : day >= s || day <= e
+      } else {
+        const d = dayMap[dayPart.trim()]
+        dayApplies = d !== undefined && day === d
+      }
+    }
+    if (dayApplies) return hour >= openTime && hour < closeTime
+  }
+  return null
+}
 
 const CafeMap = lazy(() => import('../components/CafeMap'))
 
@@ -29,7 +66,11 @@ function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex items-center gap-0.5">
       {[1, 2, 3, 4, 5].map(i => (
-        <svg key={i} width="12" height="12" viewBox="0 0 24 24" fill={i <= full ? '#F59E0B' : '#e5e7eb'} stroke="none">
+        <svg key={i} width="12" height="12" viewBox="0 0 24 24"
+          fill={i <= full ? '#F59E0B' : 'none'}
+          stroke={i <= full ? '#F59E0B' : '#e5e7eb'}
+          strokeWidth="1.5"
+          strokeLinejoin="round">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
         </svg>
       ))}
@@ -196,7 +237,7 @@ function NavChooser({ lat, lng, onClose }: { lat: number; lng: number; onClose: 
         <div className="flex justify-center mb-4">
           <div className="w-10 h-1 bg-[#dadada] rounded-full" />
         </div>
-        <p className="text-xs font-semibold text-[#9ca3af] uppercase tracking-wider mb-3">Open directions in…</p>
+        <p className="text-xs font-semibold text-[#5f5f5f] uppercase tracking-wider mb-3">Open directions in…</p>
         <div className="flex flex-col gap-2">
           {apps.map(app => (
             <a
@@ -221,167 +262,168 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
   const [showAbout, setShowAbout] = useState(false)
   const [showNavChooser, setShowNavChooser] = useState(false)
   const distKm = getDistanceKm(cafe.lat, cafe.lng)
+  const travel = getTravelTimes(distKm)
   const featureIcons = getCafeFeatureIcons(cafe)
+  const openStatus = isOpenNow(cafe.openHours)
+  const distLabel = distKm < 1 ? `${Math.round(distKm * 1000)} m` : `${distKm.toFixed(1)} km`
 
   return (
     <>
     <div className="absolute bottom-0 left-0 right-0 z-[2000] bg-white rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] animate-slide-up max-h-[75vh] overflow-y-auto">
       {/* Handle */}
-      <div className="flex justify-center pt-3 pb-1 sticky top-0 bg-white">
+      <div className="flex justify-center pt-3 pb-1 sticky top-0 bg-white z-10">
         <div className="w-10 h-1 bg-[#dadada] rounded-full" />
       </div>
 
-      <div className="px-5 pt-3 pb-6">
+      <div className="px-5 pt-2 pb-6">
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center bg-[#f6f6f6] rounded-full active:scale-95 transition-transform"
+          className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center bg-[#f6f6f6] rounded-full active:scale-95 transition-transform"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2.5" strokeLinecap="round">
             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
 
-        {/* Name */}
-        <h2 className="text-xl font-black text-[#0f0f0f] pr-10 mb-1" style={{ letterSpacing: '-0.03em' }}>
+        {/* Name — font-bold, no forced tracking */}
+        <h2 className="text-xl font-bold text-[#0f0f0f] pr-10 mb-1">
           {cafe.name}
         </h2>
 
-        {/* Feature icons */}
-        {featureIcons.length > 0 && (
-          <div className="flex items-center gap-3 mb-3">
-            {featureIcons.map(f => (
-              <div key={f.id} className="flex flex-col items-center gap-1">
-                <div className="w-5 h-5 flex items-center justify-center text-[#0f0f0f]">{f.icon}</div>
-                <span className="text-[10px] text-[#9ca3af] leading-none">{f.label}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Key decision line: open/closed · distance · walk */}
+        <div className="flex items-center gap-2 mb-2">
+          {openStatus !== null && (
+            <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${openStatus ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}>
+              {openStatus ? 'Open' : 'Closed'}
+            </span>
+          )}
+          <span className="text-xs text-[#5f5f5f]">{distLabel}</span>
+          <span className="text-[#dadada] text-xs select-none">·</span>
+          <span className="text-xs text-[#5f5f5f]">{travel.walk} min walk</span>
+        </div>
 
         {/* Rating */}
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-2 mb-4">
           <span className="text-[#0f0f0f] font-bold text-sm">{cafe.rating.toFixed(1)}</span>
           <StarRating rating={cafe.rating} />
           <span className="text-[#9ca3af] text-xs">{cafe.reviewCount.toLocaleString()} reviews</span>
         </div>
 
+        {/* Actions — primary first, secondary below */}
+        <div className="flex flex-col gap-2 mb-5">
+          <button
+            onClick={() => setShowNavChooser(true)}
+            className="w-full flex items-center justify-center gap-2 bg-[#0f0f0f] text-white font-semibold text-sm py-3.5 rounded-full active:scale-95 transition-transform"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="3 11 22 2 13 21 11 13 3 11" />
+            </svg>
+            Directions
+          </button>
+          <div className="flex gap-2">
+            <button
+              onClick={onSave}
+              className={`flex-1 flex items-center justify-center gap-2 font-semibold text-sm py-3 rounded-full active:scale-95 transition-all border ${
+                isSaved ? 'bg-[#E6C828] border-[#E6C828] text-[#0f0f0f]' : 'border-[#dadada] text-[#0f0f0f]'
+              }`}
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill={isSaved ? '#000' : 'none'} stroke={isSaved ? '#000' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+              </svg>
+              {isSaved ? 'Saved' : 'Save'}
+            </button>
+            <button
+              onClick={() => setShowAbout(v => !v)}
+              className={`flex-1 flex items-center justify-center gap-2 text-sm py-3 rounded-full active:scale-95 transition-all ${
+                showAbout ? 'font-semibold text-[#0f0f0f]' : 'font-medium text-[#5f5f5f]'
+              }`}
+            >
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="12" />
+                <line x1="12" y1="16" x2="12.01" y2="16" />
+              </svg>
+              About
+            </button>
+          </div>
+        </div>
+
+        <div className="h-px bg-[#f0f0f0] mb-4" />
+
+        {/* Feature icons — icons only, no labels */}
+        {featureIcons.length > 0 && (
+          <div className="flex items-center gap-4 mb-4">
+            {featureIcons.map(f => (
+              <div key={f.id} className="w-5 h-5 flex items-center justify-center text-[#5f5f5f]" title={f.label}>
+                {f.icon}
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
+        <div className="flex flex-wrap gap-2 mb-4">
           {cafe.tags.map(tag => (
-            <span key={tag} className="text-xs bg-[#f6f6f6] border border-[#dadada] text-[#0f0f0f] px-2.5 py-1 rounded-full">
+            <span key={tag} className="text-xs bg-[#f6f6f6] border border-[#dadada] text-[#0f0f0f] px-3 py-1 rounded-full">
               {tag}
             </span>
           ))}
         </div>
 
-        <div className="h-px bg-[#f0f0f0] mb-4" />
-
         {/* Info rows */}
-        <div className="flex flex-col gap-3 mb-5">
+        <div className="flex flex-col gap-3">
           <div className="flex items-start gap-3">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 flex-shrink-0">
               <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
             </svg>
             <span className="text-sm text-[#0f0f0f] leading-snug">{cafe.address}</span>
           </div>
-
           <div className="flex items-start gap-3">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 flex-shrink-0">
               <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
             </svg>
-            <span className="text-sm text-[#0f0f0f] leading-snug">{cafe.openHours}</span>
+            <span className="text-sm text-[#5f5f5f] leading-snug">{cafe.openHours}</span>
           </div>
-
           <div className="flex items-center gap-4">
-            {/* Walk */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="12" cy="4" r="1.5" fill="#9ca3af" stroke="none" />
-                <path d="M9 12l2-4 3 2 2 4" />
-                <path d="M9 20l1-4" />
-                <path d="M15 20l-1.5-4" />
+                <path d="M9 12l2-4 3 2 2 4" /><path d="M9 20l1-4" /><path d="M15 20l-1.5-4" />
               </svg>
-              <span className="text-sm text-[#0f0f0f]">{getTravelTimes(distKm).walk} min</span>
+              <span className="text-sm text-[#0f0f0f]">{travel.walk} min</span>
             </div>
-            {/* Transit */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="4" y="3" width="16" height="13" rx="2" />
                 <path d="M8 19l-2 3M16 19l2 3M4 11h16" />
                 <circle cx="8.5" cy="15.5" r="1" fill="#9ca3af" stroke="none" />
                 <circle cx="15.5" cy="15.5" r="1" fill="#9ca3af" stroke="none" />
               </svg>
-              <span className="text-sm text-[#0f0f0f]">{getTravelTimes(distKm).transit} min</span>
+              <span className="text-sm text-[#0f0f0f]">{travel.transit} min</span>
             </div>
-            {/* Car */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 17H3a2 2 0 01-2-2V9l3-4h14l3 4v6a2 2 0 01-2 2h-2" />
-                <circle cx="7.5" cy="17.5" r="2.5" />
-                <circle cx="16.5" cy="17.5" r="2.5" />
+                <circle cx="7.5" cy="17.5" r="2.5" /><circle cx="16.5" cy="17.5" r="2.5" />
               </svg>
-              <span className="text-sm text-[#0f0f0f]">{getTravelTimes(distKm).car} min</span>
+              <span className="text-sm text-[#0f0f0f]">{travel.car} min</span>
             </div>
           </div>
         </div>
 
-        {/* Action buttons */}
-        <div className="flex gap-2 mb-4">
-          <button
-            onClick={() => setShowNavChooser(true)}
-            className="flex-1 flex items-center justify-center gap-1.5 border border-[#dadada] text-[#0f0f0f] font-semibold text-sm py-3 rounded-full active:scale-95 transition-transform"
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polygon points="3 11 22 2 13 21 11 13 3 11" />
-            </svg>
-            Directions
-          </button>
-
-          <button
-            onClick={onSave}
-            className={`flex-1 flex items-center justify-center gap-1.5 font-semibold text-sm py-3 rounded-full active:scale-95 transition-all border ${
-              isSaved
-                ? 'bg-[#E6C828] border-[#F8EFBD] text-[#0f0f0f]'
-                : 'border-[#dadada] text-[#0f0f0f]'
-            }`}
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill={isSaved ? '#000000' : 'none'} stroke={isSaved ? '#000000' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
-            </svg>
-            {isSaved ? 'Saved' : 'Save'}
-          </button>
-
-          <button
-            onClick={() => setShowAbout(v => !v)}
-            className={`flex-1 flex items-center justify-center gap-1.5 font-semibold text-sm py-3 rounded-full active:scale-95 transition-all border ${
-              showAbout
-                ? 'bg-black text-white border-black'
-                : 'border-[#dadada] text-[#0f0f0f]'
-            }`}
-          >
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="8" x2="12" y2="12" />
-              <line x1="12" y1="16" x2="12.01" y2="16" />
-            </svg>
-            About
-          </button>
-        </div>
-
         {/* About section */}
         {showAbout && (
-          <div className="flex flex-col gap-4 pt-2">
-            <div className="h-px bg-[#f0f0f0]" />
+          <div className="flex flex-col gap-4 pt-4 mt-4 border-t border-[#f0f0f0]">
             {ABOUT_LABELS.map(({ key, label }) => {
               const items = cafe.about[key]
               if (!items || items.length === 0) return null
               return (
                 <div key={key}>
                   <p className="text-[#5f5f5f] text-[11px] font-semibold uppercase tracking-wider mb-2">{label}</p>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-2">
                     {items.map(item => (
-                      <span key={item} className="text-xs bg-[#f6f6f6] border border-[#dadada] text-[#0f0f0f] px-2.5 py-1 rounded-full">
+                      <span key={item} className="text-xs bg-[#f6f6f6] border border-[#dadada] text-[#0f0f0f] px-3 py-1 rounded-full">
                         {item}
                       </span>
                     ))}
@@ -395,11 +437,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
     </div>
 
     {showNavChooser && (
-      <NavChooser
-        lat={cafe.lat}
-        lng={cafe.lng}
-        onClose={() => setShowNavChooser(false)}
-      />
+      <NavChooser lat={cafe.lat} lng={cafe.lng} onClose={() => setShowNavChooser(false)} />
     )}
     </>
   )
@@ -409,6 +447,16 @@ export default function Discover() {
   const [state, setState] = useAppState()
   const [selectedCafe, setSelectedCafe] = useState<CafePin | null>(null)
   const { favoriteCafes, savedCafes } = state
+
+  const selectCafe = useCallback((cafe: CafePin) => {
+    setSelectedCafe(cafe)
+    dispatchSheetEvent(true)
+  }, [])
+
+  const deselectCafe = useCallback(() => {
+    setSelectedCafe(null)
+    dispatchSheetEvent(false)
+  }, [])
 
   const handleSaveToggle = (cafeId: string) => {
     const isSaved = savedCafes.some(c => c.id === cafeId)
@@ -436,7 +484,7 @@ export default function Discover() {
         <div className="absolute inset-0 bg-[#f6f6f6] flex items-center justify-center z-[1000]">
           <div className="flex items-center gap-2">
             <div className="w-4 h-4 border-2 border-[#dadada] border-t-black rounded-full animate-spin" />
-            <p className="text-[#5f5f5f] text-sm">Loading map…</p>
+            <p className="text-[#5f5f5f] text-sm">Opening map…</p>
           </div>
         </div>
       }>
@@ -444,8 +492,8 @@ export default function Discover() {
           loyalCafeNames={favoriteCafes.map(c => c.name)}
           savedCafeIds={savedCafes.map(c => c.id)}
           onSaveToggle={handleSaveToggle}
-          onCafeSelect={setSelectedCafe}
-          onMapClick={() => setSelectedCafe(null)}
+          onCafeSelect={selectCafe}
+          onMapClick={deselectCafe}
           fullScreen
         />
       </Suspense>
@@ -455,7 +503,7 @@ export default function Discover() {
           cafe={selectedCafe}
           isSaved={savedCafes.some(c => c.id === selectedCafe.id)}
           onSave={() => handleSaveToggle(selectedCafe.id)}
-          onClose={() => setSelectedCafe(null)}
+          onClose={deselectCafe}
         />
       )}
     </div>

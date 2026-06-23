@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const DiscoverIcon = ({ active }: { active: boolean }) => (
@@ -29,6 +30,15 @@ export default function BottomNav() {
   const location = useLocation()
   const navigate = useNavigate()
   const path = location.pathname
+  const [sheetOpen, setSheetOpen] = useState(false)
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      setSheetOpen((e as CustomEvent<{ open: boolean }>).detail.open)
+    }
+    window.addEventListener('strudl_sheet_open', handler)
+    return () => window.removeEventListener('strudl_sheet_open', handler)
+  }, [])
 
   const tabs = [
     { path: '/discover', label: 'Discover', icon: (a: boolean) => <DiscoverIcon active={a} /> },
@@ -37,8 +47,8 @@ export default function BottomNav() {
   ]
 
   return (
-    <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white/80 backdrop-blur-xl border-t border-[#dadada] z-[1000]">
-      <div className="flex items-end justify-around px-2 pt-2 pb-5">
+    <nav className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white/80 backdrop-blur-xl border-t border-[#dadada] z-[1000] transition-transform duration-300 ${sheetOpen ? 'translate-y-full' : 'translate-y-0'}`}>
+      <div className="flex items-end justify-around px-2 pt-2" style={{ paddingBottom: 'max(20px, env(safe-area-inset-bottom))' }}>
         {tabs.map((tab) => {
           const isActive = path === tab.path
           return (
@@ -48,8 +58,9 @@ export default function BottomNav() {
               className="flex flex-col items-center gap-1 active:scale-95 transition-transform min-w-[56px]"
               aria-label={tab.label}
             >
+              <div className={`w-5 h-[3px] rounded-full mb-0.5 transition-colors ${isActive ? 'bg-black' : 'bg-transparent'}`} />
               {tab.icon(isActive)}
-              <span className={`text-[10px] font-medium ${isActive ? 'text-black' : 'text-[#9ca3af]'}`}>
+              <span className={`text-[10px] font-medium ${isActive ? 'text-black' : 'text-[#6b7280]'}`}>
                 {tab.label}
               </span>
             </button>
