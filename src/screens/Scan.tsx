@@ -19,9 +19,7 @@ export default function Scan() {
 
   useEffect(() => {
     if (scanState === 'idle') {
-      timerRef.current = setTimeout(() => {
-        triggerScan()
-      }, 2000)
+      timerRef.current = setTimeout(() => triggerScan(), 2000)
     }
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current)
@@ -57,38 +55,39 @@ export default function Scan() {
   }
 
   return (
-    <div className="app-shell flex flex-col">
+    <div className="app-shell flex flex-col bg-[#1A1815]">
       {/* Header */}
-      <div className="flex items-center px-4 pt-14 pb-4 border-b border-[#dadada]">
+      <div className="flex items-center px-5 pt-14 pb-4">
         <button
           onClick={() => navigate('/')}
-          className="w-10 h-10 rounded-full bg-[#f6f6f6] border border-[#dadada] flex items-center justify-center active:scale-95 transition-transform"
+          className="w-10 h-10 rounded-full flex items-center justify-center active:scale-95 transition-transform"
+          style={{ background: 'rgba(255,255,255,0.08)' }}
         >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="rgba(255,255,255,0.7)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M19 12H5M12 5l-7 7 7 7" />
           </svg>
         </button>
-        <h1 className="text-[#0f0f0f] font-bold text-lg ml-4 tracking-tight" style={{ letterSpacing: '-0.02em' }}>Scan QR Code</h1>
+        <h1 className="text-[#FDFAF5] font-semibold text-base ml-4">Scan QR Code</h1>
       </div>
 
       <div className="flex-1 flex flex-col items-center justify-center px-8 pb-32">
         {(scanState === 'idle' || scanState === 'scanning') && (
           <>
             <div className="relative mb-8">
-              <div
-                className={`w-72 h-72 rounded-2xl border-2 flex items-center justify-center transition-all duration-300 ${
-                  scanState === 'scanning'
-                    ? 'border-black bg-[#f6f6f6]'
-                    : 'border-[#dadada] bg-[#f6f6f6]'
-                }`}
-              >
+              {/* QR viewfinder */}
+              <div className={`w-72 h-72 rounded-3xl flex items-center justify-center transition-all duration-300 ${
+                scanState === 'scanning'
+                  ? 'border-2 border-[#E6C828]'
+                  : 'border border-white/10'
+              }`} style={{ background: 'rgba(255,255,255,0.04)' }}>
                 {scanState === 'scanning' ? (
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-8 h-8 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                    <p className="text-[#0f0f0f] text-sm font-medium">Scanning...</p>
+                    <div className="w-8 h-8 border-2 border-[#E6C828] border-t-transparent rounded-full animate-spin" />
+                    <p className="text-white/60 text-sm font-medium">Reading…</p>
                   </div>
                 ) : (
-                  <p className="text-[#5f5f5f] text-sm text-center leading-relaxed px-4">
+                  <p className="text-white/30 text-sm text-center leading-relaxed">
                     Point at café<br />QR code
                   </p>
                 )}
@@ -96,26 +95,26 @@ export default function Scan() {
                 {/* Corner accents */}
                 {scanState === 'idle' && (
                   <>
-                    <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-black rounded-tl-xl" />
-                    <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-black rounded-tr-xl" />
-                    <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-black rounded-bl-xl" />
-                    <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-black rounded-br-xl" />
+                    <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-[#E6C828] rounded-tl-3xl" />
+                    <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-[#E6C828] rounded-tr-3xl" />
+                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-[#E6C828] rounded-bl-3xl" />
+                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-[#E6C828] rounded-br-3xl" />
                   </>
                 )}
               </div>
             </div>
 
-            <p className="text-[#5f5f5f] text-sm text-center mb-8">
-              {scanState === 'idle' ? 'Auto-scanning in 2 seconds…' : ''}
-            </p>
-
             {scanState === 'idle' && (
-              <button
-                onClick={triggerScan}
-                className="bg-[#f6f6f6] border border-[#dadada] text-[#0f0f0f] font-semibold text-sm py-3.5 px-8 rounded-full active:scale-95 transition-transform"
-              >
-                Simulate scan
-              </button>
+              <>
+                <p className="text-white/30 text-xs text-center mb-6">Scanning in a moment…</p>
+                <button
+                  onClick={triggerScan}
+                  className="border border-white/15 text-white/60 font-medium text-sm py-3 px-8 rounded-full active:scale-95 transition-transform"
+                  style={{ background: 'rgba(255,255,255,0.06)' }}
+                >
+                  Simulate scan
+                </button>
+              </>
             )}
           </>
         )}

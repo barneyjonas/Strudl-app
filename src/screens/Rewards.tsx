@@ -17,10 +17,10 @@ function SimpleQR() {
     })
   )
   return (
-    <div className="bg-[#f6f6f6] border border-[#dadada] p-4 rounded-2xl inline-block">
+    <div className="bg-white rounded-2xl p-4 inline-block border border-[#E8E2D8]">
       <div className="grid gap-0.5" style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}>
         {grid.flat().map((filled, i) => (
-          <div key={i} className={`w-6 h-6 rounded-sm ${filled ? 'bg-black' : 'bg-[#f6f6f6]'}`} />
+          <div key={i} className={`w-6 h-6 rounded-sm ${filled ? 'bg-[#1A1815]' : 'bg-white'}`} />
         ))}
       </div>
     </div>
@@ -37,7 +37,8 @@ export default function Rewards() {
   const [showHistory, setShowHistory] = useState(false)
 
   const { stamps, pastRewards } = state
-  const progress = (stamps / 9) * 100
+  const paid = 9
+  const progress = (stamps / paid) * 100
 
   const handleMarkRedeemed = () => {
     const today = new Date().toISOString().split('T')[0]
@@ -58,42 +59,43 @@ export default function Rewards() {
   if (view === 'redeem') {
     return (
       <div className="app-shell overflow-y-auto">
-        <div className="px-4 pt-12 pb-28">
-          <div className="flex items-center gap-4 mb-8">
-            <button
-              onClick={() => setView('normal')}
-              className="w-10 h-10 rounded-full bg-[#f6f6f6] border border-[#dadada] flex items-center justify-center active:scale-95 transition-transform"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 12H5M12 5l-7 7 7 7" />
-              </svg>
-            </button>
-            <h1 className="text-[#0f0f0f] font-black text-xl tracking-tight" style={{ letterSpacing: '-0.02em' }}>Redeem reward</h1>
-          </div>
+        <div className="px-5 pt-14 pb-32">
+          <button
+            onClick={() => setView('normal')}
+            className="w-10 h-10 rounded-full flex items-center justify-center mb-8 bg-[#F0EBE0] border border-[#E8E2D8] active:scale-95 transition-transform"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="#1A1815" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 12H5M12 5l-7 7 7 7" />
+            </svg>
+          </button>
 
-          <div className="flex flex-col items-center gap-6">
-            <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-6 w-full flex flex-col items-center gap-5">
-              <div className="bg-[#ededed] border border-[#dadada] rounded-xl px-6 py-3">
-                <p className="text-[#0f0f0f] font-mono font-bold text-xl tracking-widest">{redeemCode}</p>
-              </div>
-              <SimpleQR />
-              <div className="text-center">
-                <p className="text-[#0f0f0f] font-semibold text-sm">1 × Free Coffee</p>
-                <p className="text-[#5f5f5f] text-xs mt-1">Valid at any Strudl café</p>
-              </div>
+          <h1 className="text-[#1A1815] font-bold text-2xl mb-1">Redeem reward</h1>
+          <p className="text-[#7A7060] text-sm mb-8">Show this to your barista.</p>
+
+          <div className="bg-white rounded-3xl p-6 flex flex-col items-center gap-6 border border-[#E8E2D8]"
+            style={{ boxShadow: '0 4px 24px rgba(26,24,21,0.08)' }}>
+            <div className="bg-[#F0EBE0] rounded-xl px-6 py-3 border border-[#E8E2D8]">
+              <p className="text-[#1A1815] font-mono font-bold text-xl tracking-widest">{redeemCode}</p>
             </div>
-
-            <p className="text-[#5f5f5f] text-xs text-center">
-              Show this code to your barista. They'll scan it to redeem your reward.
-            </p>
-
-            <button
-              onClick={handleMarkRedeemed}
-              className="w-full bg-black text-white font-bold text-base py-4 rounded-full active:scale-95 transition-transform shadow-[0_14px_30px_rgba(0,0,0,0.14)] border border-black"
-            >
-              Mark as redeemed
-            </button>
+            <SimpleQR />
+            <div className="text-center">
+              <p className="text-[#1A1815] font-semibold text-sm">1 × Free Coffee</p>
+              <p className="text-[#7A7060] text-xs mt-1">Valid at any Strudl café</p>
+            </div>
           </div>
+
+          <p className="text-[#7A7060] text-xs text-center mt-5 mb-8 leading-relaxed">
+            Show this code to your barista.<br />They'll scan it to redeem your reward.
+          </p>
+
+          <button
+            onClick={handleMarkRedeemed}
+            className="w-full bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-4 rounded-2xl active:scale-[0.98] transition-transform"
+            style={{ boxShadow: '0 8px 24px rgba(26,24,21,0.22)' }}
+          >
+            Mark as redeemed
+          </button>
         </div>
       </div>
     )
@@ -101,45 +103,41 @@ export default function Rewards() {
 
   return (
     <div className="app-shell overflow-y-auto">
-      <div className="px-4 pt-12 pb-28">
-        <div className="mb-6">
-          <h1 className="text-2xl font-black text-[#0f0f0f] tracking-tight" style={{ letterSpacing: '-0.03em' }}>Rewards</h1>
-          <p className="text-[#5f5f5f] text-sm mt-0.5">Collect anywhere. Redeem anywhere.</p>
-        </div>
+      <div className="px-5 pt-14 pb-32">
 
-        {/* Progress display */}
-        <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-5 mb-4">
-          <div className="flex items-end gap-1 mb-4">
-            <span className="text-[#0f0f0f] font-black text-5xl" style={{ letterSpacing: '-0.04em' }}>{stamps}</span>
-            <span className="text-[#5f5f5f] font-bold text-2xl mb-1.5">/ 9</span>
-          </div>
+        <h1 className="text-[#1A1815] font-bold text-2xl mb-1">Rewards</h1>
+        <p className="text-[#7A7060] text-sm mb-8">Collect anywhere. Redeem anywhere.</p>
+
+        {/* Stamp card */}
+        <div className="mb-6">
           <StampCard stamps={stamps} />
         </div>
 
-        {stamps >= 9 ? (
-          <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-5 mb-6 flex flex-col items-center gap-4">
-            <span className="text-4xl">🎉</span>
+        {/* Progress or redeem */}
+        {stamps >= paid ? (
+          <div className="bg-[#E6C828] rounded-2xl p-5 mb-8 flex flex-col items-center gap-4">
             <div className="text-center">
-              <p className="text-[#0f0f0f] font-black text-xl" style={{ letterSpacing: '-0.02em' }}>Free coffee unlocked!</p>
-              <p className="text-[#5f5f5f] text-sm mt-1">Redeem at any Strudl café</p>
+              <p className="text-[#1A1815] font-bold text-xl">Free coffee unlocked</p>
+              <p className="text-[#1A1815]/60 text-sm mt-1">Redeem at any Strudl café</p>
             </div>
             <button
               onClick={() => setView('redeem')}
-              className="w-full bg-black text-white font-bold text-lg py-4 rounded-full active:scale-95 transition-transform shadow-[0_14px_30px_rgba(0,0,0,0.14)] border border-black"
+              className="w-full bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-4 rounded-xl active:scale-[0.98] transition-transform"
             >
               Redeem now
             </button>
           </div>
         ) : (
-          <div className="mb-6">
+          <div className="mb-8">
             <div className="flex items-center justify-between mb-2">
-              <p className="text-[#5f5f5f] text-sm">
-                <span className="text-[#0f0f0f] font-semibold">{9 - stamps}</span> more stamp{9 - stamps !== 1 ? 's' : ''} until your free coffee
+              <p className="text-[#7A7060] text-sm">
+                <span className="text-[#1A1815] font-semibold">{paid - stamps}</span> more stamp{paid - stamps !== 1 ? 's' : ''} for a free coffee
               </p>
+              <span className="text-[#7A7060] text-xs">{Math.round(progress)}%</span>
             </div>
-            <div className="h-1.5 bg-[#ededed] rounded-full overflow-hidden">
+            <div className="h-1 bg-[#E8E2D8] rounded-full overflow-hidden">
               <div
-                className="h-full bg-black rounded-full transition-all duration-700"
+                className="h-full bg-[#1A1815] rounded-full transition-all duration-700"
                 style={{ width: `${progress}%` }}
               />
             </div>
@@ -150,30 +148,31 @@ export default function Rewards() {
         <div>
           <button
             onClick={() => setShowHistory(!showHistory)}
-            className="w-full flex items-center justify-between py-3 active:scale-95 transition-transform"
+            className="w-full flex items-center justify-between py-3 active:scale-[0.98] transition-transform"
           >
-            <h2 className="text-[#0f0f0f] font-bold text-base" style={{ letterSpacing: '-0.01em' }}>Past rewards</h2>
+            <h2 className="text-[11px] font-semibold tracking-wide uppercase text-[#7A7060]">Past rewards</h2>
             <svg
-              width="18" height="18" viewBox="0 0 24 24" fill="none"
-              stroke="#5f5f5f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+              width="16" height="16" viewBox="0 0 24 24" fill="none"
+              stroke="#7A7060" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
               className={`transition-transform duration-300 ${showHistory ? 'rotate-180' : ''}`}
             >
               <polyline points="6 9 12 15 18 9" />
             </svg>
           </button>
 
-          {(showHistory || pastRewards.length > 0) && (
-            <div className="flex flex-col gap-2">
+          {showHistory && (
+            <div className="flex flex-col gap-2 mt-2">
               {pastRewards.length === 0 ? (
-                <p className="text-[#5f5f5f] text-sm py-4 text-center">No rewards redeemed yet</p>
+                <p className="text-[#7A7060] text-sm py-4 text-center">No rewards redeemed yet</p>
               ) : (
                 pastRewards.map((r) => (
-                  <div key={r.id} className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl px-4 py-3 flex items-center justify-between">
+                  <div key={r.id}
+                    className="bg-white rounded-2xl px-4 py-3.5 flex items-center justify-between border border-[#E8E2D8]">
                     <div>
-                      <p className="text-[#0f0f0f] text-sm font-medium">{r.cafe}</p>
-                      <p className="text-[#5f5f5f] text-xs">{r.redeemedAt}</p>
+                      <p className="text-[#1A1815] text-sm font-medium">{r.cafe}</p>
+                      <p className="text-[#7A7060] text-xs mt-0.5">{r.redeemedAt}</p>
                     </div>
-                    <span className="text-[#5f5f5f] font-mono text-xs">{r.code}</span>
+                    <span className="text-[#7A7060] font-mono text-xs">{r.code}</span>
                   </div>
                 ))
               )}

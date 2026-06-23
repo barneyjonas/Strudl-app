@@ -18,21 +18,30 @@ export default function Onboarding() {
   }
 
   return (
-    <div className="app-shell flex flex-col items-center justify-center min-h-screen px-6 bg-white">
+    <div className="app-shell flex flex-col items-center justify-center min-h-screen px-6"
+      style={{ background: '#FDFAF5' }}>
+
       {step === 1 && (
-        <div className="flex flex-col items-center text-center w-full max-w-xs gap-6 -mt-12">
-          <img src={logo} alt="Strudl" className="w-64 h-64" />
-          <div className="flex flex-col gap-3 -mt-20">
-            <p className="text-4xl font-black text-[#0f0f0f] leading-tight" style={{ letterSpacing: '-0.03em' }}>
-              Strudl, drink<br />like a local.
-            </p>
-            <p className="text-[#5f5f5f] text-sm leading-relaxed">
+        <div className="flex flex-col items-center text-center w-full max-w-xs gap-8 -mt-8">
+          {/* Logo on dark pill — the brand mark */}
+          <div className="w-24 h-24 rounded-3xl flex items-center justify-center"
+            style={{ background: '#1A1815' }}>
+            <img src={logo} alt="Strudl" className="w-16 h-16" style={{ filter: 'invert(1)' }} />
+          </div>
+
+          <div className="flex flex-col gap-3">
+            <h1 className="text-3xl font-bold text-[#1A1815] leading-tight">
+              Drink like<br />a local.
+            </h1>
+            <p className="text-[#7A7060] text-sm leading-relaxed">
               Collect stamps at any café.<br />Earn free coffee. No cards, no fuss.
             </p>
           </div>
+
           <button
             onClick={() => setStep(2)}
-            className="w-full bg-black text-white font-bold text-base py-4 rounded-full active:scale-95 transition-transform shadow-[0_14px_30px_rgba(0,0,0,0.14)] border border-black"
+            className="w-full bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-4 rounded-2xl active:scale-[0.98] transition-transform"
+            style={{ boxShadow: '0 8px 24px rgba(26,24,21,0.2)' }}
           >
             Get started
           </button>
@@ -41,36 +50,33 @@ export default function Onboarding() {
 
       {step === 2 && (
         <div className="flex flex-col w-full max-w-xs gap-6">
-          <div className="flex flex-col gap-1">
-            <h2 className="text-2xl font-black text-[#0f0f0f] tracking-tight" style={{ letterSpacing: '-0.02em' }}>Who are you?</h2>
-            <p className="text-[#5f5f5f] text-sm">We'll personalise your experience.</p>
+          <div>
+            <h2 className="text-2xl font-bold text-[#1A1815]">Who are you?</h2>
+            <p className="text-[#7A7060] text-sm mt-1">We'll personalise your experience.</p>
           </div>
+
           <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#5f5f5f] text-xs font-medium uppercase tracking-wider">Your name</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="bg-[#f6f6f6] border border-[#dadada] rounded-xl px-4 py-3.5 text-[#0f0f0f] text-base outline-none focus:border-black transition-colors placeholder-[#9ca3af]"
-                placeholder="Your name"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#5f5f5f] text-xs font-medium uppercase tracking-wider">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-[#f6f6f6] border border-[#dadada] rounded-xl px-4 py-3.5 text-[#0f0f0f] text-base outline-none focus:border-black transition-colors placeholder-[#9ca3af]"
-                placeholder="your@email.com"
-              />
-            </div>
+            {[
+              { label: 'Your name', value: name, setter: setName, type: 'text', placeholder: 'Your name' },
+              { label: 'Email', value: email, setter: setEmail, type: 'email', placeholder: 'your@email.com' },
+            ].map(({ label, value, setter, type, placeholder }) => (
+              <div key={label} className="flex flex-col gap-1.5">
+                <label className="text-[#7A7060] text-[10px] font-semibold uppercase tracking-wider">{label}</label>
+                <input
+                  type={type}
+                  value={value}
+                  onChange={(e) => setter(e.target.value)}
+                  placeholder={placeholder}
+                  className="bg-[#F0EBE0] border border-[#E8E2D8] rounded-xl px-4 py-3.5 text-[#1A1815] text-base outline-none focus:border-[#1A1815] transition-colors placeholder-[#C8BFB0]"
+                />
+              </div>
+            ))}
           </div>
+
           <button
             onClick={handleStep2Continue}
             disabled={!name.trim() || !email.trim()}
-            className="w-full bg-black text-white font-bold text-base py-4 rounded-full active:scale-95 transition-transform disabled:opacity-30 border border-black"
+            className="w-full bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-4 rounded-2xl active:scale-[0.98] transition-transform disabled:opacity-30"
           >
             Continue
           </button>
@@ -79,59 +85,66 @@ export default function Onboarding() {
 
       {step === 3 && (
         <div className="flex flex-col w-full max-w-xs gap-6">
-          <div className="flex flex-col gap-1">
-            <h2 className="text-2xl font-black text-[#0f0f0f] tracking-tight" style={{ letterSpacing: '-0.02em' }}>One last thing</h2>
-            <p className="text-[#5f5f5f] text-sm">These help us give you the best experience.</p>
+          <div>
+            <h2 className="text-2xl font-bold text-[#1A1815]">One last thing</h2>
+            <p className="text-[#7A7060] text-sm mt-1">These help us give you the best experience.</p>
           </div>
-          <div className="flex flex-col gap-3">
-            <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-4 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#ededed] flex items-center justify-center flex-shrink-0">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                  <path d="M13.73 21a2 2 0 01-3.46 0" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <p className="text-[#0f0f0f] font-semibold text-sm">Enable notifications</p>
-                <p className="text-[#5f5f5f] text-xs mt-0.5">Get stamp confirmations & rewards</p>
-              </div>
-              <button
-                onClick={() => {}}
-                className="text-black text-sm font-bold active:scale-95 transition-transform"
-              >
-                Allow
-              </button>
-            </div>
 
-            <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-4 flex items-center gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#ededed] flex items-center justify-center flex-shrink-0">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
+          <div className="flex flex-col gap-3">
+            {[
+              {
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="#1A1815" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 01-3.46 0" />
+                  </svg>
+                ),
+                title: 'Enable notifications',
+                desc: 'Stamp confirmations & rewards',
+              },
+              {
+                icon: (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="#1A1815" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                ),
+                title: 'Allow location',
+                desc: 'Find Strudl cafés near you',
+              },
+            ].map(({ icon, title, desc }) => (
+              <div key={title}
+                className="bg-white rounded-2xl p-4 flex items-center gap-4 border border-[#E8E2D8]">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: '#F0EBE0' }}>
+                  {icon}
+                </div>
+                <div className="flex-1">
+                  <p className="text-[#1A1815] font-medium text-sm">{title}</p>
+                  <p className="text-[#7A7060] text-xs mt-0.5">{desc}</p>
+                </div>
+                <button
+                  onClick={() => {}}
+                  className="text-[#1A1815] text-sm font-semibold active:scale-95 transition-transform"
+                >
+                  Allow
+                </button>
               </div>
-              <div className="flex-1">
-                <p className="text-[#0f0f0f] font-semibold text-sm">Allow location</p>
-                <p className="text-[#5f5f5f] text-xs mt-0.5">Find Strudl cafés near you</p>
-              </div>
-              <button
-                onClick={() => {}}
-                className="text-black text-sm font-bold active:scale-95 transition-transform"
-              >
-                Allow
-              </button>
-            </div>
+            ))}
           </div>
 
           <button
             onClick={handleFinish}
-            className="w-full bg-black text-white font-bold text-base py-4 rounded-full active:scale-95 transition-transform shadow-[0_14px_30px_rgba(0,0,0,0.14)] border border-black"
+            className="w-full bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-4 rounded-2xl active:scale-[0.98] transition-transform"
+            style={{ boxShadow: '0 8px 24px rgba(26,24,21,0.2)' }}
           >
-            Start collecting ☕
+            Start collecting
           </button>
           <button
             onClick={handleFinish}
-            className="text-[#5f5f5f] text-sm text-center active:scale-95 transition-transform"
+            className="text-[#7A7060] text-sm text-center active:scale-95 transition-transform"
           >
             Skip for now
           </button>

@@ -5,17 +5,15 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void 
   return (
     <button
       onClick={onChange}
-      className={`relative w-12 h-6 rounded-full transition-colors duration-200 focus:outline-none active:scale-95 border ${
-        checked ? 'bg-black border-black' : 'bg-[#ededed] border-[#dadada]'
+      className={`relative w-12 h-6 rounded-full transition-colors duration-200 focus:outline-none active:scale-95 ${
+        checked ? 'bg-[#1A1815]' : 'bg-[#E8E2D8]'
       }`}
       role="switch"
       aria-checked={checked}
     >
-      <span
-        className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${
-          checked ? 'translate-x-6' : 'translate-x-0'
-        }`}
-      />
+      <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${
+        checked ? 'translate-x-6' : 'translate-x-0'
+      }`} />
     </button>
   )
 }
@@ -44,106 +42,96 @@ export default function Profile() {
 
   return (
     <div className="app-shell overflow-y-auto">
-      <div className="px-4 pt-12 pb-28">
-
-        <h1 className="text-2xl font-black text-[#0f0f0f] tracking-tight mb-6" style={{ letterSpacing: '-0.03em' }}>Profile</h1>
+      <div className="px-5 pt-14 pb-32">
 
         {/* Avatar + name */}
-        <div className="flex flex-col items-center gap-3 mb-8">
-          <div className="w-20 h-20 rounded-full bg-[#ededed] border border-[#dadada] flex items-center justify-center">
-            <span className="text-[#0f0f0f] font-black text-2xl" style={{ letterSpacing: '-0.02em' }}>{initials}</span>
+        <div className="flex flex-col items-center gap-3 mb-10">
+          <div className="w-20 h-20 rounded-full flex items-center justify-center"
+            style={{ background: '#1A1815' }}>
+            <span className="text-[#E6C828] font-bold text-2xl">{initials}</span>
           </div>
           <div className="text-center">
-            <p className="text-[#0f0f0f] font-bold text-lg" style={{ letterSpacing: '-0.02em' }}>{user.name}</p>
-            <p className="text-[#5f5f5f] text-sm">{user.email}</p>
+            <p className="text-[#1A1815] font-bold text-lg">{user.name}</p>
+            <p className="text-[#7A7060] text-sm">{user.email}</p>
           </div>
         </div>
 
         {/* Stats row */}
         <div className="grid grid-cols-3 gap-2 mb-8">
-          <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-3 flex flex-col items-center gap-1">
-            <span className="text-[#0f0f0f] font-black text-2xl" style={{ letterSpacing: '-0.03em' }}>{lifetimeStamps}</span>
-            <span className="text-[#5f5f5f] text-[10px] text-center leading-tight">Lifetime stamps</span>
-          </div>
-          <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-3 flex flex-col items-center gap-1">
-            <span className="text-[#0f0f0f] font-black text-2xl" style={{ letterSpacing: '-0.03em' }}>{lifetimeRewards}</span>
-            <span className="text-[#5f5f5f] text-[10px] text-center leading-tight">Rewards redeemed</span>
-          </div>
-          <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-3 flex flex-col items-center gap-1">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" overflow="visible">
+          {[
+            { value: lifetimeStamps, label: 'Stamps' },
+            { value: lifetimeRewards, label: 'Rewards' },
+          ].map(({ value, label }) => (
+            <div key={label} className="bg-white rounded-2xl p-4 flex flex-col items-center gap-1 border border-[#E8E2D8]">
+              <span className="text-[#1A1815] font-bold text-2xl">{value}</span>
+              <span className="text-[#7A7060] text-[10px] text-center">{label}</span>
+            </div>
+          ))}
+          <div className="bg-white rounded-2xl p-4 flex flex-col items-center gap-1 border border-[#E8E2D8]">
+            <svg width="22" height="22" viewBox="0 -2 24 26" fill="none"
+              stroke="#1A1815" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 8h1a4 4 0 010 8h-1" />
               <path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z" />
               <line x1="8" y1="1" x2="8" y2="4" />
               <line x1="12" y1="1" x2="12" y2="4" />
               <line x1="16" y1="1" x2="16" y2="4" />
             </svg>
-            <span className="text-[#5f5f5f] text-[10px] text-center leading-tight truncate w-full">{topCafe}</span>
+            <span className="text-[#7A7060] text-[10px] text-center leading-tight truncate w-full">{topCafe}</span>
           </div>
         </div>
 
         {/* Edit profile */}
-        <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-4 mb-4">
-          <h2 className="text-[#0f0f0f] font-bold text-base mb-4" style={{ letterSpacing: '-0.01em' }}>Edit profile</h2>
+        <div className="bg-white rounded-2xl p-5 mb-3 border border-[#E8E2D8]">
+          <h2 className="text-[#1A1815] font-semibold text-sm mb-4">Edit profile</h2>
           <div className="flex flex-col gap-3">
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#5f5f5f] text-xs font-medium uppercase tracking-wider">Name</label>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="bg-white border border-[#dadada] rounded-xl px-4 py-3 text-[#0f0f0f] text-sm outline-none focus:border-black transition-colors"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#5f5f5f] text-xs font-medium uppercase tracking-wider">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-white border border-[#dadada] rounded-xl px-4 py-3 text-[#0f0f0f] text-sm outline-none focus:border-black transition-colors"
-              />
-            </div>
-            <div className="flex flex-col gap-1.5">
-              <label className="text-[#5f5f5f] text-xs font-medium uppercase tracking-wider">Phone</label>
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                className="bg-white border border-[#dadada] rounded-xl px-4 py-3 text-[#0f0f0f] text-sm outline-none focus:border-black transition-colors"
-              />
-            </div>
+            {[
+              { label: 'Name', value: name, setter: setName, type: 'text', placeholder: 'Your name' },
+              { label: 'Email', value: email, setter: setEmail, type: 'email', placeholder: 'your@email.com' },
+              { label: 'Phone', value: phone, setter: setPhone, type: 'tel', placeholder: '+43 650 123 4567' },
+            ].map(({ label, value, setter, type, placeholder }) => (
+              <div key={label} className="flex flex-col gap-1.5">
+                <label className="text-[#7A7060] text-[10px] font-semibold uppercase tracking-wider">{label}</label>
+                <input
+                  type={type}
+                  value={value}
+                  onChange={(e) => setter(e.target.value)}
+                  placeholder={placeholder}
+                  className="bg-[#FDFAF5] border border-[#E8E2D8] rounded-xl px-4 py-3 text-[#1A1815] text-sm outline-none focus:border-[#1A1815] transition-colors"
+                />
+              </div>
+            ))}
             <button
               onClick={handleSave}
-              className={`w-full py-3.5 rounded-full font-bold text-sm transition-all active:scale-95 border ${
+              className={`w-full py-3.5 rounded-full font-semibold text-sm transition-all active:scale-[0.98] mt-1 ${
                 saved
-                  ? 'bg-[#f6f6f6] text-[#0f0f0f] border-[#dadada]'
-                  : 'bg-black text-white border-black shadow-[0_8px_20px_rgba(0,0,0,0.12)]'
+                  ? 'bg-[#F0EBE0] text-[#7A7060] border border-[#E8E2D8]'
+                  : 'bg-[#1A1815] text-[#FDFAF5]'
               }`}
             >
-              {saved ? '✓ Saved!' : 'Save changes'}
+              {saved ? '✓ Saved' : 'Save changes'}
             </button>
           </div>
         </div>
 
         {/* Notifications */}
-        <div className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-4 mb-4">
-          <h2 className="text-[#0f0f0f] font-bold text-base mb-4" style={{ letterSpacing: '-0.01em' }}>Notifications</h2>
+        <div className="bg-white rounded-2xl p-5 mb-3 border border-[#E8E2D8]">
+          <h2 className="text-[#1A1815] font-semibold text-sm mb-4">Notifications</h2>
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#0f0f0f] text-sm font-medium">Push notifications</p>
-                <p className="text-[#5f5f5f] text-xs">Stamp confirmations & rewards</p>
+                <p className="text-[#1A1815] text-sm font-medium">Push notifications</p>
+                <p className="text-[#7A7060] text-xs mt-0.5">Stamp confirmations & rewards</p>
               </div>
               <Toggle
                 checked={user.notifyPush}
                 onChange={() => setState({ user: { ...user, notifyPush: !user.notifyPush } })}
               />
             </div>
-            <div className="h-px bg-[#dadada]" />
+            <div className="h-px bg-[#E8E2D8]" />
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-[#0f0f0f] text-sm font-medium">Lapsed reminders</p>
-                <p className="text-[#5f5f5f] text-xs">Nudge when you haven't visited</p>
+                <p className="text-[#1A1815] text-sm font-medium">Lapsed reminders</p>
+                <p className="text-[#7A7060] text-xs mt-0.5">Nudge when you haven't visited</p>
               </div>
               <Toggle
                 checked={user.notifyLapsed}
@@ -153,15 +141,15 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Privacy */}
-        <p className="text-[#5f5f5f] text-xs text-center leading-relaxed mb-6 px-4">
+        {/* Privacy note */}
+        <p className="text-[#7A7060] text-xs text-center leading-relaxed mb-6 px-4">
           Your data is anonymised before being shared with cafés.
         </p>
 
         {/* Sign out */}
         <button
           onClick={handleSignOut}
-          className="w-full border border-[#dadada] text-[#5f5f5f] font-semibold text-sm py-4 rounded-full active:scale-95 transition-transform"
+          className="w-full border border-[#E8E2D8] text-[#7A7060] font-medium text-sm py-4 rounded-full active:scale-[0.98] transition-transform"
         >
           Sign out
         </button>

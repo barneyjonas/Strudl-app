@@ -59,7 +59,7 @@ export default function StampSuccess({ stamps, total = 9 }: Props) {
       {/* Mute toggle */}
       <button
         onClick={toggleSound}
-        className="absolute -top-2 right-0 w-9 h-9 flex items-center justify-center rounded-full text-[#9ca3af] active:scale-95 transition-transform"
+        className="absolute -top-2 right-0 w-9 h-9 flex items-center justify-center rounded-full text-white/30 active:scale-95 transition-transform"
         aria-label={soundOn ? 'Mute sound' : 'Unmute sound'}
       >
         {soundOn ? <SoundOnIcon /> : <SoundOffIcon />}
@@ -76,14 +76,14 @@ export default function StampSuccess({ stamps, total = 9 }: Props) {
 
       {/* Result text */}
       <div>
-        <p className="text-black font-black text-5xl mb-1 ss-text-1" style={{ letterSpacing: '-0.04em' }}>+1</p>
-        <p className="text-[#0f0f0f] font-bold text-2xl ss-text-1" style={{ letterSpacing: '-0.02em' }}>stamp!</p>
+        <p className="text-[#FDFAF5] font-bold text-5xl mb-1 ss-text-1" style={{ letterSpacing: '-0.04em' }}>+1</p>
+        <p className="text-[#FDFAF5] font-bold text-2xl ss-text-1" style={{ letterSpacing: '-0.02em' }}>stamp!</p>
         {isRewardReady ? (
-          <p className="text-[#D97706] font-bold text-sm mt-2 ss-text-2">
-            9 / 9 — your free coffee is ready! 🎉
+          <p className="text-[#E6C828] font-semibold text-sm mt-2 ss-text-2">
+            9 / 9 — your free coffee is ready!
           </p>
         ) : (
-          <p className="text-[#5f5f5f] text-sm mt-2 ss-text-2">
+          <p className="text-white/40 text-sm mt-2 ss-text-2">
             <span className="ss-count">{stamps}</span> / {total} collected
           </p>
         )}
@@ -101,7 +101,7 @@ export default function StampSuccess({ stamps, total = 9 }: Props) {
       ) : (
         <button
           onClick={() => navigate('/')}
-          className="bg-black text-white font-bold text-base py-4 px-12 rounded-full active:scale-95 transition-transform border border-black ss-done"
+          className="bg-[#FDFAF5] text-[#1A1815] font-semibold text-sm py-4 px-12 rounded-2xl active:scale-95 transition-transform ss-done"
           aria-label="Done, return to home"
         >
           Done

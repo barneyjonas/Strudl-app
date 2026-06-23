@@ -9,21 +9,19 @@
   }
 
   body {
-    background: radial-gradient(circle at top left, rgba(0,0,0,0.04), transparent 22%),
-                radial-gradient(circle at top right, rgba(0,0,0,0.03), transparent 20%),
-                #f6f6f6;
+    background: #EDE8DF;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    color: #0f0f0f;
+    color: #1A1815;
   }
 
   ::-webkit-scrollbar { display: none; }
   * { scrollbar-width: none; -ms-overflow-style: none; }
 
   :focus-visible {
-    outline: 2px solid #000000;
+    outline: 2px solid #1A1815;
     outline-offset: 3px;
     border-radius: 4px;
   }
@@ -35,10 +33,10 @@
     margin-left: auto;
     margin-right: auto;
     min-height: 100svh;
-    background-color: #ffffff;
+    background-color: #FDFAF5;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 80px rgba(0,0,0,0.10);
+    box-shadow: 0 0 80px rgba(0,0,0,0.14);
   }
 }
 
@@ -50,12 +48,13 @@
   animation: slide-up 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ── Leaflet popup overrides (matches landing page) ── */
+/* ── Leaflet popup overrides ── */
 .leaflet-popup-content-wrapper {
   border-radius: 20px !important;
   box-shadow: 0 20px 48px rgba(0,0,0,0.13), 0 1px 0 rgba(0,0,0,0.05) !important;
-  border: 1px solid rgba(0,0,0,0.07) !important;
+  border: 1px solid #E8E2D8 !important;
   padding: 0 !important;
+  background: #FDFAF5 !important;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif !important;
 }
 .leaflet-popup-content {
@@ -72,22 +71,22 @@
   width: auto !important;
   height: auto !important;
 }
-.leaflet-popup-close-button:hover { color: #000 !important; }
+.leaflet-popup-close-button:hover { color: #1A1815 !important; }
 
 .strudl-map-popup { min-width: 180px; }
 
 .strudl-map-popup-name {
   font-size: 0.97rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin-bottom: 4px;
-  color: #0f0f0f;
+  color: #1A1815;
 }
 
 .strudl-map-loyal-badge {
   display: inline-block;
-  background: rgba(217, 119, 6, 0.12);
-  color: #92400E;
+  background: rgba(230,200,40,0.15);
+  color: #8A6800;
   border-radius: 999px;
   padding: 2px 8px;
   font-size: 0.74rem;
@@ -96,7 +95,7 @@
 }
 
 .strudl-map-popup-addr {
-  color: #5f5f5f;
+  color: #7A7060;
   font-size: 0.83rem;
   margin-bottom: 10px;
 }
@@ -110,11 +109,11 @@
 
 .strudl-map-tag {
   font-size: 0.74rem;
-  border: 1px solid #dadada;
+  border: 1px solid #E8E2D8;
   border-radius: 999px;
   padding: 3px 9px;
-  background: #f6f6f6;
-  color: #0f0f0f;
+  background: #F0EBE0;
+  color: #1A1815;
 }
 
 .strudl-map-popup-actions {
@@ -122,29 +121,12 @@
   gap: 6px;
 }
 
-.strudl-map-visit-btn {
-  flex: 1;
-  text-align: center;
-  background: #f6f6f6;
-  color: #0f0f0f;
-  border: 1px solid #dadada;
-  border-radius: 999px;
-  padding: 8px 10px;
-  font-size: 0.8rem;
-  font-weight: 700;
-  cursor: pointer;
-  letter-spacing: -0.01em;
-  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-}
-
-.strudl-map-visit-btn:hover { background: #ededed; }
-
 .strudl-map-directions-btn {
   flex: 1;
   display: block;
   text-align: center;
-  background: #000;
-  color: #fff;
+  background: #1A1815;
+  color: #FDFAF5;
   border-radius: 999px;
   padding: 8px 10px;
   font-size: 0.8rem;
@@ -153,7 +135,7 @@
   letter-spacing: -0.01em;
 }
 
-.strudl-map-directions-btn:hover { background: #222; }
+.strudl-map-directions-btn:hover { background: #2C2820; }
 
 .strudl-map-save-btn {
   width: 36px;
@@ -161,11 +143,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f6f6f6;
-  border: 1px solid #dadada;
+  background: #F0EBE0;
+  border: 1px solid #E8E2D8;
   border-radius: 999px;
   cursor: pointer;
   flex-shrink: 0;
 }
-.strudl-map-save-btn:hover { background: #ededed; }
+.strudl-map-save-btn:hover { background: #E8E2D8; }
 .strudl-map-save-btn.saved { background: #fef3c7; border-color: #D97706; }

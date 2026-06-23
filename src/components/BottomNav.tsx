@@ -2,14 +2,18 @@ import { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const DiscoverIcon = ({ active }: { active: boolean }) => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={active ? '#000000' : '#9ca3af'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+    stroke={active ? '#1A1815' : 'rgba(255,255,255,0.6)'}
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" />
     <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
   </svg>
 )
 
 const CafeIcon = ({ active }: { active: boolean }) => (
-  <svg width="22" height="22" viewBox="0 -2 24 26" fill="none" stroke={active ? '#000000' : '#9ca3af'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="20" height="20" viewBox="0 -2 24 26" fill="none"
+    stroke={active ? '#1A1815' : 'rgba(255,255,255,0.6)'}
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 8h1a4 4 0 010 8h-1" />
     <path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z" />
     <line x1="8" y1="1" x2="8" y2="4" />
@@ -19,12 +23,13 @@ const CafeIcon = ({ active }: { active: boolean }) => (
 )
 
 const ProfileIcon = ({ active }: { active: boolean }) => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={active ? '#000000' : '#9ca3af'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+    stroke={active ? '#1A1815' : 'rgba(255,255,255,0.6)'}
+    strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
     <circle cx="12" cy="7" r="4" />
   </svg>
 )
-
 
 export default function BottomNav() {
   const location = useLocation()
@@ -42,27 +47,35 @@ export default function BottomNav() {
 
   const tabs = [
     { path: '/discover', label: 'Discover', icon: (a: boolean) => <DiscoverIcon active={a} /> },
-    { path: '/home', label: 'Cafés', icon: (a: boolean) => <CafeIcon active={a} /> },
-    { path: '/profile', label: 'Profile', icon: (a: boolean) => <ProfileIcon active={a} /> },
+    { path: '/home',     label: 'Cafés',    icon: (a: boolean) => <CafeIcon active={a} /> },
+    { path: '/profile',  label: 'Profile',  icon: (a: boolean) => <ProfileIcon active={a} /> },
   ]
 
   return (
-    <nav className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] bg-white/80 backdrop-blur-xl border-t border-[#dadada] z-[1000] transition-transform duration-300 ${sheetOpen ? 'translate-y-full' : 'translate-y-0'}`}>
-      <div className="flex items-end justify-around px-2 pt-2" style={{ paddingBottom: 'max(20px, env(safe-area-inset-bottom))' }}>
+    <nav
+      className="fixed left-1/2 -translate-x-1/2 z-[1000] transition-all duration-300"
+      style={{
+        bottom: 'max(24px, env(safe-area-inset-bottom))',
+        transform: sheetOpen
+          ? 'translateX(-50%) translateY(140%) scale(0.9)'
+          : 'translateX(-50%) translateY(0) scale(1)',
+        opacity: sheetOpen ? 0 : 1,
+        pointerEvents: sheetOpen ? 'none' : 'auto',
+      }}
+    >
+      <div className="flex items-center bg-[#1A1815] rounded-full p-1.5 gap-0.5 shadow-[0_8px_32px_rgba(0,0,0,0.36),0_2px_8px_rgba(0,0,0,0.18)]">
         {tabs.map((tab) => {
           const isActive = path === tab.path
           return (
             <button
               key={tab.path}
               onClick={() => navigate(tab.path)}
-              className="flex flex-col items-center gap-1 active:scale-95 transition-transform min-w-[56px]"
               aria-label={tab.label}
+              className={`w-[60px] h-12 flex flex-col items-center justify-center rounded-full transition-all duration-200 active:scale-90 ${
+                isActive ? 'bg-[#E6C828]' : 'bg-transparent'
+              }`}
             >
-              <div className={`w-5 h-[3px] rounded-full mb-0.5 transition-colors ${isActive ? 'bg-black' : 'bg-transparent'}`} />
               {tab.icon(isActive)}
-              <span className={`text-[10px] font-medium ${isActive ? 'text-black' : 'text-[#6b7280]'}`}>
-                {tab.label}
-              </span>
             </button>
           )
         })}

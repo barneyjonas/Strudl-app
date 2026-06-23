@@ -19,20 +19,10 @@ function formatDist(km: number): string {
   return `${km.toFixed(1)} km`
 }
 
-const CafeIcon = ({ stroke = '#0f0f0f' }: { stroke?: string }) => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" overflow="visible">
-    <path d="M20 8h1a4 4 0 010 8h-1" />
-    <path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z" />
-    <line x1="8" y1="1" x2="8" y2="4" />
-    <line x1="12" y1="1" x2="12" y2="4" />
-    <line x1="16" y1="1" x2="16" y2="4" />
-  </svg>
-)
-
 export default function Home() {
   const [state, setState] = useAppState()
   const navigate = useNavigate()
-  const { favoriteCafes, savedCafes, stamps } = state
+  const { favoriteCafes, savedCafes, stamps, user } = state
 
   const savedWithDist = [...savedCafes]
     .map(cafe => ({ ...cafe, distKm: getDistanceKm(cafe.lat, cafe.lng) }))
@@ -42,17 +32,16 @@ export default function Home() {
     setState({ savedCafes: savedCafes.filter(c => c.id !== cafeId) })
   }
 
-  const isEmpty = favoriteCafes.length === 0 && savedCafes.length === 0
+  const firstName = user.name.split(' ')[0]
 
   return (
     <div className="app-shell overflow-y-auto">
-      <div className="px-4 pt-12 pb-28">
+      <div className="px-5 pt-14 pb-32">
 
-        <h1 className="text-2xl font-black text-[#0f0f0f] mb-6" style={{ letterSpacing: '-0.03em' }}>
-          Cafés
-        </h1>
+        {/* Greeting */}
+        <p className="text-[#7A7060] text-sm mb-5">Good coffee, {firstName}.</p>
 
-        {/* Stamp card */}
+        {/* Hero stamp card */}
         <div className="mb-6">
           <StampCard stamps={stamps} />
         </div>
@@ -60,43 +49,45 @@ export default function Home() {
         {/* Scan CTA */}
         <button
           onClick={() => navigate('/scan')}
-          className="w-full bg-black text-white font-bold text-base py-4 rounded-full active:scale-95 transition-transform shadow-[0_14px_30px_rgba(0,0,0,0.18)] border border-black flex items-center justify-center gap-2 mb-8"
+          className="w-full flex items-center justify-center gap-2.5 bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-4 rounded-2xl active:scale-[0.98] transition-transform mb-10"
+          style={{ boxShadow: '0 8px 24px rgba(26,24,21,0.22)' }}
         >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="3" width="7" height="7" rx="1" />
             <rect x="14" y="3" width="7" height="7" rx="1" />
             <rect x="3" y="14" width="7" height="7" rx="1" />
             <path d="M14 14h2v2h-2zM18 14h3M14 18v3M18 18h3v3h-3z" />
           </svg>
-          Scan to collect stamp
+          Collect a stamp
         </button>
-
-        {/* Empty state */}
-        {isEmpty && (
-          <div className="text-center py-12 flex flex-col items-center gap-3">
-            <div className="w-14 h-14 rounded-2xl bg-[#f6f6f6] border border-[#dadada] flex items-center justify-center">
-              <CafeIcon stroke="#dadada" />
-            </div>
-            <div>
-              <p className="text-[#5f5f5f] text-sm font-medium">No cafés yet</p>
-              <p className="text-[#9ca3af] text-xs mt-1">Discover cafés on the map and scan to collect stamps</p>
-            </div>
-          </div>
-        )}
 
         {/* Your cafés */}
         {favoriteCafes.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-[#0f0f0f] font-bold text-base mb-3" style={{ letterSpacing: '-0.01em' }}>Your cafés</h2>
-            <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4">
+            <h2 className="text-[#1A1815] font-semibold text-sm mb-4 tracking-wide uppercase text-[11px] text-[#7A7060]">Your cafés</h2>
+            <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
               {favoriteCafes.map((cafe) => (
-                <div key={cafe.id} className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-4 flex flex-col gap-2 min-w-[140px] flex-shrink-0">
-                  <div className="w-10 h-10 rounded-xl bg-[#ededed] flex items-center justify-center">
-                    <CafeIcon />
+                <div key={cafe.id}
+                  className="bg-white rounded-2xl px-4 py-4 flex flex-col gap-2 min-w-[148px] flex-shrink-0 border border-[#E8E2D8]"
+                  style={{ boxShadow: '0 2px 12px rgba(26,24,21,0.06)' }}
+                >
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center"
+                    style={{ background: '#F0EBE0' }}>
+                    <svg width="18" height="18" viewBox="0 -2 24 26" fill="none"
+                      stroke="#1A1815" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 8h1a4 4 0 010 8h-1" />
+                      <path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z" />
+                      <line x1="8" y1="1" x2="8" y2="4" />
+                      <line x1="12" y1="1" x2="12" y2="4" />
+                      <line x1="16" y1="1" x2="16" y2="4" />
+                    </svg>
                   </div>
-                  <p className="text-[#0f0f0f] font-semibold text-sm leading-tight">{cafe.name}</p>
-                  {cafe.label && <p className="text-black text-xs font-medium">{cafe.label}</p>}
-                  <p className="text-[#5f5f5f] text-xs">{cafe.visits} visit{cafe.visits !== 1 ? 's' : ''}</p>
+                  <p className="text-[#1A1815] font-semibold text-sm leading-tight">{cafe.name}</p>
+                  {cafe.label && (
+                    <p className="text-[#E6C828] text-[10px] font-semibold">{cafe.label}</p>
+                  )}
+                  <p className="text-[#7A7060] text-xs">{cafe.visits} visit{cafe.visits !== 1 ? 's' : ''}</p>
                 </div>
               ))}
             </div>
@@ -106,28 +97,62 @@ export default function Home() {
         {/* Saved cafés */}
         {savedWithDist.length > 0 && (
           <div>
-            <h2 className="text-[#0f0f0f] font-bold text-base mb-3" style={{ letterSpacing: '-0.01em' }}>Saved</h2>
-            <div className="flex flex-col gap-3">
+            <h2 className="text-[11px] font-semibold tracking-wide uppercase text-[#7A7060] mb-4">Saved</h2>
+            <div className="flex flex-col gap-2">
               {savedWithDist.map((cafe) => (
-                <div key={cafe.id} className="bg-[#f6f6f6] border border-[#dadada] rounded-2xl p-4 flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#ededed] flex items-center justify-center flex-shrink-0">
-                    <CafeIcon />
+                <div key={cafe.id}
+                  className="bg-white rounded-2xl px-4 py-3.5 flex items-center gap-4 border border-[#E8E2D8]"
+                  style={{ boxShadow: '0 1px 8px rgba(26,24,21,0.05)' }}
+                >
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: '#F0EBE0' }}>
+                    <svg width="18" height="18" viewBox="0 -2 24 26" fill="none"
+                      stroke="#1A1815" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 8h1a4 4 0 010 8h-1" />
+                      <path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z" />
+                      <line x1="8" y1="1" x2="8" y2="4" />
+                      <line x1="12" y1="1" x2="12" y2="4" />
+                      <line x1="16" y1="1" x2="16" y2="4" />
+                    </svg>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[#0f0f0f] font-semibold text-sm leading-tight truncate">{cafe.name}</p>
-                    <p className="text-[#5f5f5f] text-xs mt-0.5">{formatDist(cafe.distKm)} away</p>
+                    <p className="text-[#1A1815] font-semibold text-sm leading-tight truncate">{cafe.name}</p>
+                    <p className="text-[#7A7060] text-xs mt-0.5">{formatDist(cafe.distKm)} away</p>
                   </div>
                   <button
                     onClick={() => handleUnsave(cafe.id)}
-                    className="flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-[#E6C828] border border-[#F8EFBD] active:scale-95 transition-transform"
+                    className="flex-shrink-0 w-9 h-9 flex items-center justify-center rounded-full bg-[#E6C828] active:scale-95 transition-transform"
                     title="Remove from saved"
                   >
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="#000000" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width="14" height="14" viewBox="0 0 24 24"
+                      fill="#1A1815" stroke="#1A1815" strokeWidth="2"
+                      strokeLinecap="round" strokeLinejoin="round">
                       <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
                     </svg>
                   </button>
                 </div>
               ))}
+            </div>
+          </div>
+        )}
+
+        {/* Empty state */}
+        {favoriteCafes.length === 0 && savedCafes.length === 0 && (
+          <div className="text-center py-16 flex flex-col items-center gap-3">
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
+              style={{ background: '#F0EBE0', border: '1px solid #E8E2D8' }}>
+              <svg width="22" height="22" viewBox="0 -2 24 26" fill="none"
+                stroke="#C8BFB0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M20 8h1a4 4 0 010 8h-1" />
+                <path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z" />
+                <line x1="8" y1="1" x2="8" y2="4" />
+                <line x1="12" y1="1" x2="12" y2="4" />
+                <line x1="16" y1="1" x2="16" y2="4" />
+              </svg>
+            </div>
+            <div>
+              <p className="text-[#1A1815] text-sm font-medium">No cafés yet</p>
+              <p className="text-[#7A7060] text-xs mt-1 leading-relaxed">Discover cafés on the map<br />and scan to collect stamps</p>
             </div>
           </div>
         )}

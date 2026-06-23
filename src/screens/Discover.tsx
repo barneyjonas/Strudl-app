@@ -231,13 +231,13 @@ function NavChooser({ lat, lng, onClose }: { lat: number; lng: number; onClose: 
     <div className="fixed inset-0 z-[3000] flex items-end justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/30" />
       <div
-        className="relative w-full max-w-[430px] bg-white rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.2)] pb-8 pt-4 px-5"
+        className="relative w-full max-w-[430px] bg-[#FDFAF5] rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.2)] pb-8 pt-4 px-5"
         onClick={e => e.stopPropagation()}
       >
         <div className="flex justify-center mb-4">
           <div className="w-10 h-1 bg-[#dadada] rounded-full" />
         </div>
-        <p className="text-xs font-semibold text-[#5f5f5f] uppercase tracking-wider mb-3">Open directions in…</p>
+        <p className="text-xs font-semibold text-[#7A7060] uppercase tracking-wider mb-3">Open directions in…</p>
         <div className="flex flex-col gap-2">
           {apps.map(app => (
             <a
@@ -246,7 +246,7 @@ function NavChooser({ lat, lng, onClose }: { lat: number; lng: number; onClose: 
               target="_blank"
               rel="noopener noreferrer"
               onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-[#dadada] text-[#0f0f0f] font-semibold text-sm active:bg-[#f6f6f6] transition-colors"
+              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-[#E8E2D8] text-[#1A1815] font-semibold text-sm active:bg-[#f6f6f6] transition-colors"
             >
               {app.icon}
               {app.label}
@@ -269,9 +269,9 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
 
   return (
     <>
-    <div className="absolute bottom-0 left-0 right-0 z-[2000] bg-white rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] animate-slide-up max-h-[75vh] overflow-y-auto">
+    <div className="absolute bottom-0 left-0 right-0 z-[2000] bg-[#FDFAF5] rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] animate-slide-up max-h-[75vh] overflow-y-auto">
       {/* Handle */}
-      <div className="flex justify-center pt-3 pb-1 sticky top-0 bg-white z-10">
+      <div className="flex justify-center pt-3 pb-1 sticky top-0 bg-[#FDFAF5] z-10">
         <div className="w-10 h-1 bg-[#dadada] rounded-full" />
       </div>
 
@@ -279,7 +279,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center bg-[#f6f6f6] rounded-full active:scale-95 transition-transform"
+          className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center bg-[#F0EBE0] rounded-full active:scale-95 transition-transform"
         >
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2.5" strokeLinecap="round">
             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
@@ -287,7 +287,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
         </button>
 
         {/* Name — font-bold, no forced tracking */}
-        <h2 className="text-xl font-bold text-[#0f0f0f] pr-10 mb-1">
+        <h2 className="text-xl font-bold text-[#1A1815] pr-10 mb-1">
           {cafe.name}
         </h2>
 
@@ -298,14 +298,14 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
               {openStatus ? 'Open' : 'Closed'}
             </span>
           )}
-          <span className="text-xs text-[#5f5f5f]">{distLabel}</span>
+          <span className="text-xs text-[#7A7060]">{distLabel}</span>
           <span className="text-[#dadada] text-xs select-none">·</span>
-          <span className="text-xs text-[#5f5f5f]">{travel.walk} min walk</span>
+          <span className="text-xs text-[#7A7060]">{travel.walk} min walk</span>
         </div>
 
         {/* Rating */}
         <div className="flex items-center gap-2 mb-4">
-          <span className="text-[#0f0f0f] font-bold text-sm">{cafe.rating.toFixed(1)}</span>
+          <span className="text-[#1A1815] font-bold text-sm">{cafe.rating.toFixed(1)}</span>
           <StarRating rating={cafe.rating} />
           <span className="text-[#9ca3af] text-xs">{cafe.reviewCount.toLocaleString()} reviews</span>
         </div>
@@ -314,7 +314,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
         <div className="flex flex-col gap-2 mb-5">
           <button
             onClick={() => setShowNavChooser(true)}
-            className="w-full flex items-center justify-center gap-2 bg-[#0f0f0f] text-white font-semibold text-sm py-3.5 rounded-full active:scale-95 transition-transform"
+            className="w-full flex items-center justify-center gap-2 bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-3.5 rounded-full active:scale-95 transition-transform"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <polygon points="3 11 22 2 13 21 11 13 3 11" />
@@ -325,7 +325,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
             <button
               onClick={onSave}
               className={`flex-1 flex items-center justify-center gap-2 font-semibold text-sm py-3 rounded-full active:scale-95 transition-all border ${
-                isSaved ? 'bg-[#E6C828] border-[#E6C828] text-[#0f0f0f]' : 'border-[#dadada] text-[#0f0f0f]'
+                isSaved ? 'bg-[#E6C828] border-[#E6C828] text-[#1A1815]' : 'border-[#E8E2D8] text-[#1A1815]'
               }`}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill={isSaved ? '#000' : 'none'} stroke={isSaved ? '#000' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -336,7 +336,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
             <button
               onClick={() => setShowAbout(v => !v)}
               className={`flex-1 flex items-center justify-center gap-2 text-sm py-3 rounded-full active:scale-95 transition-all ${
-                showAbout ? 'font-semibold text-[#0f0f0f]' : 'font-medium text-[#5f5f5f]'
+                showAbout ? 'font-semibold text-[#1A1815]' : 'font-medium text-[#7A7060]'
               }`}
             >
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -355,7 +355,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
         {featureIcons.length > 0 && (
           <div className="flex items-center gap-4 mb-4">
             {featureIcons.map(f => (
-              <div key={f.id} className="w-5 h-5 flex items-center justify-center text-[#5f5f5f]" title={f.label}>
+              <div key={f.id} className="w-5 h-5 flex items-center justify-center text-[#7A7060]" title={f.label}>
                 {f.icon}
               </div>
             ))}
@@ -365,7 +365,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-4">
           {cafe.tags.map(tag => (
-            <span key={tag} className="text-xs bg-[#f6f6f6] border border-[#dadada] text-[#0f0f0f] px-3 py-1 rounded-full">
+            <span key={tag} className="text-xs bg-[#F0EBE0] border border-[#E8E2D8] text-[#1A1815] px-3 py-1 rounded-full">
               {tag}
             </span>
           ))}
@@ -377,13 +377,13 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 flex-shrink-0">
               <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
             </svg>
-            <span className="text-sm text-[#0f0f0f] leading-snug">{cafe.address}</span>
+            <span className="text-sm text-[#1A1815] leading-snug">{cafe.address}</span>
           </div>
           <div className="flex items-start gap-3">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 flex-shrink-0">
               <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
             </svg>
-            <span className="text-sm text-[#5f5f5f] leading-snug">{cafe.openHours}</span>
+            <span className="text-sm text-[#7A7060] leading-snug">{cafe.openHours}</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
@@ -391,7 +391,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
                 <circle cx="12" cy="4" r="1.5" fill="#9ca3af" stroke="none" />
                 <path d="M9 12l2-4 3 2 2 4" /><path d="M9 20l1-4" /><path d="M15 20l-1.5-4" />
               </svg>
-              <span className="text-sm text-[#0f0f0f]">{travel.walk} min</span>
+              <span className="text-sm text-[#1A1815]">{travel.walk} min</span>
             </div>
             <div className="flex items-center gap-2">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -400,14 +400,14 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
                 <circle cx="8.5" cy="15.5" r="1" fill="#9ca3af" stroke="none" />
                 <circle cx="15.5" cy="15.5" r="1" fill="#9ca3af" stroke="none" />
               </svg>
-              <span className="text-sm text-[#0f0f0f]">{travel.transit} min</span>
+              <span className="text-sm text-[#1A1815]">{travel.transit} min</span>
             </div>
             <div className="flex items-center gap-2">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M5 17H3a2 2 0 01-2-2V9l3-4h14l3 4v6a2 2 0 01-2 2h-2" />
                 <circle cx="7.5" cy="17.5" r="2.5" /><circle cx="16.5" cy="17.5" r="2.5" />
               </svg>
-              <span className="text-sm text-[#0f0f0f]">{travel.car} min</span>
+              <span className="text-sm text-[#1A1815]">{travel.car} min</span>
             </div>
           </div>
         </div>
@@ -420,10 +420,10 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
               if (!items || items.length === 0) return null
               return (
                 <div key={key}>
-                  <p className="text-[#5f5f5f] text-[11px] font-semibold uppercase tracking-wider mb-2">{label}</p>
+                  <p className="text-[#7A7060] text-[11px] font-semibold uppercase tracking-wider mb-2">{label}</p>
                   <div className="flex flex-wrap gap-2">
                     {items.map(item => (
-                      <span key={item} className="text-xs bg-[#f6f6f6] border border-[#dadada] text-[#0f0f0f] px-3 py-1 rounded-full">
+                      <span key={item} className="text-xs bg-[#F0EBE0] border border-[#E8E2D8] text-[#1A1815] px-3 py-1 rounded-full">
                         {item}
                       </span>
                     ))}
@@ -483,8 +483,8 @@ export default function Discover() {
       <Suspense fallback={
         <div className="absolute inset-0 bg-[#f6f6f6] flex items-center justify-center z-[1000]">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 border-2 border-[#dadada] border-t-black rounded-full animate-spin" />
-            <p className="text-[#5f5f5f] text-sm">Opening map…</p>
+            <div className="w-4 h-4 border-2 border-[#E8E2D8] border-t-black rounded-full animate-spin" />
+            <p className="text-[#7A7060] text-sm">Opening map…</p>
           </div>
         </div>
       }>
