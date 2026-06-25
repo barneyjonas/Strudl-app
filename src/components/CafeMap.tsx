@@ -117,7 +117,7 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
 
     mapRef.current = map
 
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
       subdomains: 'abcd',
       maxZoom: 19,
@@ -137,11 +137,11 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       attrEl.style.marginRight = '8px'
     }
 
-    const circleStyle = { color: '#6b7280', weight: 1.5, dashArray: '6 6', fillOpacity: 0 }
+    const circleStyle = { color: '#E6C828', weight: 1.5, dashArray: '6 6', fillOpacity: 0 }
     circle5Ref.current = L.circle([DEFAULT_LAT, DEFAULT_LNG], { radius: 400, ...circleStyle }).addTo(map)
     circle10Ref.current = L.circle([DEFAULT_LAT, DEFAULT_LNG], { radius: 800, ...circleStyle }).addTo(map)
 
-    const labelStyle = 'background:transparent;border:none;box-shadow:none;font-size:11px;font-weight:600;color:#6b7280;white-space:nowrap;'
+    const labelStyle = 'background:transparent;border:none;box-shadow:none;font-size:11px;font-weight:600;color:#E6C828;white-space:nowrap;'
     label5Ref.current = L.marker([DEFAULT_LAT + 0.0036, DEFAULT_LNG], {
       icon: L.divIcon({ className: '', html: `<span style="${labelStyle}">5 Min</span>`, iconAnchor: [20, 6] }),
       interactive: false,
