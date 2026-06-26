@@ -150,7 +150,7 @@
   flex-shrink: 0;
 }
 .strudl-map-save-btn:hover { background: #E8E2D8; }
-.strudl-map-save-btn.saved { background: #fef3c7; border-color: #D97706; }
+.strudl-map-save-btn.saved { background: rgba(230,200,40,0.15); border-color: #E6C828; }
 
 /* ── Leaflet zoom control — dark theme ── */
 .leaflet-control-zoom {

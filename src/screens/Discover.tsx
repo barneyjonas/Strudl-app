@@ -235,7 +235,7 @@ function NavChooser({ lat, lng, onClose }: { lat: number; lng: number; onClose: 
         onClick={e => e.stopPropagation()}
       >
         <div className="flex justify-center mb-4">
-          <div className="w-10 h-1 bg-[#dadada] rounded-full" />
+          <div className="w-10 h-1 bg-[#E8E2D8] rounded-full" />
         </div>
         <p className="text-xs font-semibold text-[#7A7060] uppercase tracking-wider mb-3">Open directions in…</p>
         <div className="flex flex-col gap-2">
@@ -246,7 +246,7 @@ function NavChooser({ lat, lng, onClose }: { lat: number; lng: number; onClose: 
               target="_blank"
               rel="noopener noreferrer"
               onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-[#E8E2D8] text-[#1A1815] font-semibold text-sm active:bg-[#f6f6f6] transition-colors"
+              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-[#E8E2D8] text-[#1A1815] font-semibold text-sm active:bg-[#F0EBE0] transition-colors"
             >
               {app.icon}
               {app.label}
@@ -272,7 +272,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
     <div className="absolute bottom-0 left-0 right-0 z-[2000] bg-[#FDFAF5] rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] animate-slide-up max-h-[75vh] overflow-y-auto">
       {/* Handle */}
       <div className="flex justify-center pt-3 pb-1 sticky top-0 bg-[#FDFAF5] z-10">
-        <div className="w-10 h-1 bg-[#dadada] rounded-full" />
+        <div className="w-10 h-1 bg-[#E8E2D8] rounded-full" />
       </div>
 
       <div className="px-5 pt-2 pb-6">
@@ -281,7 +281,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
           onClick={onClose}
           className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center bg-[#F0EBE0] rounded-full active:scale-95 transition-transform"
         >
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2.5" strokeLinecap="round">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1A1815" strokeWidth="2.5" strokeLinecap="round">
             <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
           </svg>
         </button>
@@ -299,7 +299,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
             </span>
           )}
           <span className="text-xs text-[#7A7060]">{distLabel}</span>
-          <span className="text-[#dadada] text-xs select-none">·</span>
+          <span className="text-[#E8E2D8] text-xs select-none">·</span>
           <span className="text-xs text-[#7A7060]">{travel.walk} min walk</span>
         </div>
 

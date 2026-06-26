@@ -48,8 +48,8 @@ function makePopupContent(cafe: CafePin, isLoyal: boolean, isSaved: boolean): st
   const loyalBadge = isLoyal ? `<div class="strudl-map-loyal-badge">Your café ✓</div>` : ''
   const directionsUrl = `https://www.google.com/maps/dir/?api=1&destination=${cafe.lat},${cafe.lng}`
   const bookmarkSvg = isSaved
-    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="#D97706" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"></path></svg>`
-    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"></path></svg>`
+    ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="#E6C828" stroke="#E6C828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"></path></svg>`
+    : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7A7060" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"></path></svg>`
   return `<div class="strudl-map-popup">
     <div class="strudl-map-popup-name">${cafe.name}</div>
     ${loyalBadge}
@@ -240,7 +240,7 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       className={
         fullScreen
           ? 'absolute inset-0 overflow-hidden'
-          : 'relative rounded-2xl overflow-hidden border border-[#dadada]'
+          : 'relative rounded-2xl overflow-hidden border border-[#E8E2D8]'
       }
       style={containerStyle}
     >

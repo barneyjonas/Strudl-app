@@ -11,7 +11,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: () => void 
       role="switch"
       aria-checked={checked}
     >
-      <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow transition-transform duration-200 ${
+      <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-[#FDFAF5] rounded-full shadow transition-transform duration-200 ${
         checked ? 'translate-x-6' : 'translate-x-0'
       }`} />
     </button>
