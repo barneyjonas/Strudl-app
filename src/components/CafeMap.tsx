@@ -36,7 +36,7 @@ function makeMarkerIcon(state: MarkerState): L.DivIcon {
   }
   return L.divIcon({
     className: '',
-    html: `<div style="width:34px;height:34px;border-radius:10px;background:#E6C828;border:2px solid rgba(253,250,245,0.8);box-shadow:0 4px 14px rgba(0,0,0,0.22);display:flex;align-items:center;justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#1A1815" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>`,
+    html: `<div style="width:34px;height:34px;border-radius:10px;background:#E6C828;border:2px solid rgba(253,250,245,0.8);box-shadow:0 4px 14px rgba(0,0,0,0.22);display:flex;align-items:center;justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 -2 24 26" fill="none" stroke="#1A1815" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 8h1a4 4 0 010 8h-1"/><path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z"/><line x1="8" y1="1" x2="8" y2="4"/><line x1="12" y1="1" x2="12" y2="4"/><line x1="16" y1="1" x2="16" y2="4"/></svg></div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 17],
     popupAnchor: [0, -20],
