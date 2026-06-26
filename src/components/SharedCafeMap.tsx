@@ -18,8 +18,8 @@ interface Props {
 function makeIcon(): L.DivIcon {
   return L.divIcon({
     className: '',
-    html: `<div style="width:36px;height:36px;border-radius:12px;background:#D97706;border:2.5px solid #B45309;box-shadow:0 4px 16px rgba(0,0,0,0.22);display:flex;align-items:center;justify-content:center;overflow:hidden;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    html: `<div style="width:36px;height:36px;border-radius:12px;background:#E6C828;border:2px solid rgba(255,255,255,0.8);box-shadow:0 4px 16px rgba(0,0,0,0.22);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1A1815" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <path d="M20 8h1a4 4 0 010 8h-1"/>
         <path d="M4 8h16v9a4 4 0 01-4 4H8a4 4 0 01-4-4V8z"/>
         <line x1="8" y1="1" x2="8" y2="4"/>
@@ -60,8 +60,8 @@ export default function SharedCafeMap({ pins, height = '200px' }: Props) {
     const icon = makeIcon()
     pins.forEach(pin => {
       const popup = `<div style="font-family:Inter,sans-serif;min-width:140px;">
-        <div style="font-weight:800;font-size:0.9rem;color:#0f0f0f;margin-bottom:${pin.address ? '4px' : '0'}">${pin.name}</div>
-        ${pin.address ? `<div style="font-size:0.75rem;color:#5f5f5f;">${pin.address}</div>` : ''}
+        <div style="font-weight:800;font-size:0.9rem;color:#1A1815;margin-bottom:${pin.address ? '4px' : '0'}">${pin.name}</div>
+        ${pin.address ? `<div style="font-size:0.75rem;color:#7A7060;">${pin.address}</div>` : ''}
       </div>`
       L.marker([pin.lat, pin.lng], { icon })
         .addTo(map)
@@ -98,12 +98,12 @@ export default function SharedCafeMap({ pins, height = '200px' }: Props) {
   }, [])
 
   return (
-    <div className="relative rounded-2xl overflow-hidden border border-[#dadada]" style={{ height }}>
+    <div className="relative rounded-2xl overflow-hidden" style={{ height, border: '1px solid #E8E2D8' }}>
       {loading && (
-        <div className="absolute inset-0 bg-[#f6f6f6] flex items-center justify-center z-[1000]">
+        <div className="absolute inset-0 flex items-center justify-center z-[1000]" style={{ background: '#F0EBE0' }}>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 border-2 border-[#dadada] border-t-black rounded-full animate-spin" />
-            <p className="text-[#5f5f5f] text-sm">Loading map…</p>
+            <div className="w-4 h-4 border-2 rounded-full animate-spin" style={{ borderColor: '#E8E2D8', borderTopColor: '#1A1815' }} />
+            <p className="text-sm" style={{ color: '#7A7060' }}>Loading map…</p>
           </div>
         </div>
       )}

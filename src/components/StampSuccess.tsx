@@ -93,7 +93,8 @@ export default function StampSuccess({ stamps, total = 9 }: Props) {
       {isRewardReady ? (
         <button
           onClick={() => navigate('/rewards', { state: { redeem: true } })}
-          className="bg-[#D97706] text-white font-bold text-base py-4 px-12 rounded-full active:scale-95 transition-transform shadow-[0_14px_30px_rgba(217,119,6,0.35)] border border-[#D97706] ss-done"
+          className="font-bold text-base py-4 px-12 rounded-full active:scale-95 transition-transform ss-done"
+          style={{ background: '#E6C828', color: '#1A1815', border: '1px solid #E6C828', boxShadow: '0 14px 30px rgba(230,200,40,0.30)' }}
           aria-label="Claim your free coffee"
         >
           Claim coffee

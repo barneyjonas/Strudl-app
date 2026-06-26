@@ -127,13 +127,13 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
     zoom.addTo(map)
     const zoomEl = zoom.getContainer()
     if (zoomEl) {
-      zoomEl.style.marginBottom = '96px'
+      zoomEl.style.marginBottom = '0'
       zoomEl.style.marginRight = '10px'
     }
 
     const attrEl = (map as any).attributionControl.getContainer() as HTMLElement | undefined
     if (attrEl) {
-      attrEl.style.marginBottom = '96px'
+      attrEl.style.marginBottom = '92px'
       attrEl.style.marginRight = '10px'
       attrEl.style.fontSize = '10px'
     }
