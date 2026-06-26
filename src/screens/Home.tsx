@@ -69,7 +69,7 @@ export default function Home() {
             <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5">
               {favoriteCafes.map((cafe) => (
                 <div key={cafe.id}
-                  className="bg-white rounded-2xl px-4 py-4 flex flex-col gap-2 min-w-[148px] flex-shrink-0 border border-[#E8E2D8]"
+                  className="bg-[#FDFAF5] rounded-2xl px-4 py-4 flex flex-col gap-2 min-w-[148px] flex-shrink-0 border border-[#E8E2D8]"
                   style={{ boxShadow: '0 2px 12px rgba(26,24,21,0.06)' }}
                 >
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center"
@@ -101,7 +101,7 @@ export default function Home() {
             <div className="flex flex-col gap-2">
               {savedWithDist.map((cafe) => (
                 <div key={cafe.id}
-                  className="bg-white rounded-2xl px-4 py-3.5 flex items-center gap-4 border border-[#E8E2D8]"
+                  className="bg-[#FDFAF5] rounded-2xl px-4 py-3.5 flex items-center gap-4 border border-[#E8E2D8]"
                   style={{ boxShadow: '0 1px 8px rgba(26,24,21,0.05)' }}
                 >
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"

@@ -127,14 +127,15 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
     zoom.addTo(map)
     const zoomEl = zoom.getContainer()
     if (zoomEl) {
-      zoomEl.style.marginBottom = '3px'
-      zoomEl.style.marginRight = '8px'
+      zoomEl.style.marginBottom = '96px'
+      zoomEl.style.marginRight = '10px'
     }
 
     const attrEl = (map as any).attributionControl.getContainer() as HTMLElement | undefined
     if (attrEl) {
-      attrEl.style.marginBottom = '72px'
-      attrEl.style.marginRight = '8px'
+      attrEl.style.marginBottom = '96px'
+      attrEl.style.marginRight = '10px'
+      attrEl.style.fontSize = '10px'
     }
 
     const circleStyle = { color: '#E6C828', weight: 1.5, dashArray: '6 6', fillOpacity: 0 }
@@ -244,24 +245,23 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
       style={containerStyle}
     >
       {loading && (
-        <div className="absolute inset-0 bg-[#f6f6f6] flex items-center justify-center z-[1000]">
+        <div className="absolute inset-0 flex items-center justify-center z-[1000]" style={{ background: '#1A1815' }}>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 border-2 border-[#dadada] border-t-black rounded-full animate-spin" />
-            <p className="text-[#5f5f5f] text-sm">Finding cafés near you…</p>
+            <div className="w-4 h-4 border-2 border-white/20 border-t-[#E6C828] rounded-full animate-spin" />
+            <p className="text-white/50 text-sm">Finding cafés near you…</p>
           </div>
         </div>
       )}
       <div ref={containerRef} className="w-full h-full" />
       <button
         onClick={flyToUser}
-        className="absolute left-3 bottom-[76px] z-[1001] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-[#dadada] min-w-[44px] min-h-[44px] flex items-center justify-center active:scale-95 transition-transform"
+        className="absolute left-3 bottom-[76px] z-[1001] rounded-xl min-w-[44px] min-h-[44px] flex items-center justify-center active:scale-95 transition-transform"
+        style={{ background: 'rgba(26,24,21,0.82)', border: '1px solid rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)' }}
         title="Centre on location"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0f0f0f" strokeWidth="2" strokeLinecap="round">
-          {/* outer ring */}
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FDFAF5" strokeWidth="2" strokeLinecap="round">
           <circle cx="12" cy="12" r="7" />
-          {/* centre dot */}
-          <circle cx="12" cy="12" r="2" fill="#0f0f0f" />
+          <circle cx="12" cy="12" r="2" fill="#FDFAF5" />
           {/* tick marks */}
           <line x1="12" y1="2" x2="12" y2="5" />
           <line x1="12" y1="19" x2="12" y2="22" />

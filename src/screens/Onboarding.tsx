@@ -116,7 +116,7 @@ export default function Onboarding() {
               },
             ].map(({ icon, title, desc }) => (
               <div key={title}
-                className="bg-white rounded-2xl p-4 flex items-center gap-4 border border-[#E8E2D8]">
+                className="bg-[#FDFAF5] rounded-2xl p-4 flex items-center gap-4 border border-[#E8E2D8]">
                 <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: '#F0EBE0' }}>
                   {icon}

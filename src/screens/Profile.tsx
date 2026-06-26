@@ -62,12 +62,12 @@ export default function Profile() {
             { value: lifetimeStamps, label: 'Stamps' },
             { value: lifetimeRewards, label: 'Rewards' },
           ].map(({ value, label }) => (
-            <div key={label} className="bg-white rounded-2xl p-4 flex flex-col items-center gap-1 border border-[#E8E2D8]">
+            <div key={label} className="bg-[#FDFAF5] rounded-2xl p-4 flex flex-col items-center gap-1 border border-[#E8E2D8]">
               <span className="text-[#1A1815] font-bold text-2xl">{value}</span>
               <span className="text-[#7A7060] text-[10px] text-center">{label}</span>
             </div>
           ))}
-          <div className="bg-white rounded-2xl p-4 flex flex-col items-center gap-1 border border-[#E8E2D8]">
+          <div className="bg-[#FDFAF5] rounded-2xl p-4 flex flex-col items-center gap-1 border border-[#E8E2D8]">
             <svg width="22" height="22" viewBox="0 -2 24 26" fill="none"
               stroke="#1A1815" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 8h1a4 4 0 010 8h-1" />
@@ -81,7 +81,7 @@ export default function Profile() {
         </div>
 
         {/* Edit profile */}
-        <div className="bg-white rounded-2xl p-5 mb-3 border border-[#E8E2D8]">
+        <div className="bg-[#FDFAF5] rounded-2xl p-5 mb-3 border border-[#E8E2D8]">
           <h2 className="text-[#1A1815] font-semibold text-sm mb-4">Edit profile</h2>
           <div className="flex flex-col gap-3">
             {[
@@ -114,7 +114,7 @@ export default function Profile() {
         </div>
 
         {/* Notifications */}
-        <div className="bg-white rounded-2xl p-5 mb-3 border border-[#E8E2D8]">
+        <div className="bg-[#FDFAF5] rounded-2xl p-5 mb-3 border border-[#E8E2D8]">
           <h2 className="text-[#1A1815] font-semibold text-sm mb-4">Notifications</h2>
           <div className="flex flex-col gap-4">
             <div className="flex items-center justify-between">

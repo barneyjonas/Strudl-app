@@ -67,8 +67,8 @@ function StarRating({ rating }: { rating: number }) {
     <div className="flex items-center gap-0.5">
       {[1, 2, 3, 4, 5].map(i => (
         <svg key={i} width="12" height="12" viewBox="0 0 24 24"
-          fill={i <= full ? '#F59E0B' : 'none'}
-          stroke={i <= full ? '#F59E0B' : '#e5e7eb'}
+          fill={i <= full ? '#E6C828' : 'none'}
+          stroke={i <= full ? '#E6C828' : '#E8E2D8'}
           strokeWidth="1.5"
           strokeLinejoin="round">
           <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
@@ -481,10 +481,10 @@ export default function Discover() {
   return (
     <div className="app-shell">
       <Suspense fallback={
-        <div className="absolute inset-0 bg-[#f6f6f6] flex items-center justify-center z-[1000]">
+        <div className="absolute inset-0 flex items-center justify-center z-[1000]" style={{ background: '#1A1815' }}>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-4 border-2 border-[#E8E2D8] border-t-black rounded-full animate-spin" />
-            <p className="text-[#7A7060] text-sm">Opening map…</p>
+            <div className="w-4 h-4 border-2 border-white/20 border-t-[#E6C828] rounded-full animate-spin" />
+            <p className="text-white/50 text-sm">Opening map…</p>
           </div>
         </div>
       }>

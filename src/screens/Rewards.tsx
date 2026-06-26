@@ -17,7 +17,7 @@ function SimpleQR() {
     })
   )
   return (
-    <div className="bg-white rounded-2xl p-4 inline-block border border-[#E8E2D8]">
+    <div className="bg-[#FDFAF5] rounded-2xl p-4 inline-block border border-[#E8E2D8]">
       <div className="grid gap-0.5" style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}>
         {grid.flat().map((filled, i) => (
           <div key={i} className={`w-6 h-6 rounded-sm ${filled ? 'bg-[#1A1815]' : 'bg-white'}`} />
@@ -73,7 +73,7 @@ export default function Rewards() {
           <h1 className="text-[#1A1815] font-bold text-2xl mb-1">Redeem reward</h1>
           <p className="text-[#7A7060] text-sm mb-8">Show this to your barista.</p>
 
-          <div className="bg-white rounded-3xl p-6 flex flex-col items-center gap-6 border border-[#E8E2D8]"
+          <div className="bg-[#FDFAF5] rounded-3xl p-6 flex flex-col items-center gap-6 border border-[#E8E2D8]"
             style={{ boxShadow: '0 4px 24px rgba(26,24,21,0.08)' }}>
             <div className="bg-[#F0EBE0] rounded-xl px-6 py-3 border border-[#E8E2D8]">
               <p className="text-[#1A1815] font-mono font-bold text-xl tracking-widest">{redeemCode}</p>
@@ -167,7 +167,7 @@ export default function Rewards() {
               ) : (
                 pastRewards.map((r) => (
                   <div key={r.id}
-                    className="bg-white rounded-2xl px-4 py-3.5 flex items-center justify-between border border-[#E8E2D8]">
+                    className="bg-[#FDFAF5] rounded-2xl px-4 py-3.5 flex items-center justify-between border border-[#E8E2D8]">
                     <div>
                       <p className="text-[#1A1815] text-sm font-medium">{r.cafe}</p>
                       <p className="text-[#7A7060] text-xs mt-0.5">{r.redeemedAt}</p>
