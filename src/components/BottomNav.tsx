@@ -65,7 +65,7 @@ export default function BottomNav() {
   const tabs = [
     { path: '/discover', label: 'Discover', icon: (a: boolean) => <DiscoverIcon active={a} />, stamped: false },
     { path: '/home',     label: 'Cafés',    icon: (a: boolean) => <CafeIcon active={a} />,    stamped: true  },
-    { path: '/scan',     label: 'Scan',     icon: (a: boolean) => <ScanIcon active={a} />,    stamped: false },
+    { path: '/scan',     label: 'Scan',     icon: (a: boolean) => <ScanIcon active={a} />,    stamped: true  },
     { path: '/profile',  label: 'Profile',  icon: (a: boolean) => <ProfileIcon active={a} />, stamped: true  },
   ]
 
