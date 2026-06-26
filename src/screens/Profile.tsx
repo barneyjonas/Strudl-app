@@ -153,6 +153,26 @@ export default function Profile() {
         >
           Sign out
         </button>
+
+        {/* Legal */}
+        <div className="mt-6 border-t border-[#E8E2D8] pt-4">
+          <p className="text-[#7A7060] text-[10px] font-semibold uppercase tracking-wider mb-3">Rechtliches</p>
+          {[
+            { label: 'Impressum', href: 'https://barneyjonas.github.io/strudl-cafes-platform/impressum' },
+            { label: 'AGB', href: 'https://barneyjonas.github.io/strudl-cafes-platform/agb' },
+            { label: 'Datenschutzerklärung', href: 'https://barneyjonas.github.io/strudl-cafes-platform/datenschutz' },
+          ].map(({ label, href }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-sm text-[#7A7060] py-2.5 border-b border-[#E8E2D8] last:border-0 active:opacity-60 transition-opacity"
+            >
+              {label}
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   )
