@@ -193,74 +193,16 @@ function getCafeFeatureIcons(cafe: CafePin): FeatureIcon[] {
   return all.filter(Boolean).slice(0, 5) as FeatureIcon[]
 }
 
-function NavChooser({ lat, lng, onClose }: { lat: number; lng: number; onClose: () => void }) {
-  const apps = [
-    {
-      label: 'Google Maps',
-      url: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`,
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" /><circle cx="12" cy="10" r="3" />
-        </svg>
-      ),
-    },
-    {
-      label: 'Waze',
-      url: `https://waze.com/ul?ll=${lat},${lng}&navigate=yes`,
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="10" r="7" />
-          <path d="M9 10h.01M15 10h.01" strokeWidth="3" strokeLinecap="round" />
-          <path d="M9.5 13.5s.8 1.5 2.5 1.5 2.5-1.5 2.5-1.5" />
-          <path d="M8 19l-1 3M16 19l1 3" />
-        </svg>
-      ),
-    },
-    {
-      label: 'Apple Maps',
-      url: `https://maps.apple.com/?daddr=${lat},${lng}&dirflg=d`,
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polygon points="3 11 22 2 13 21 11 13 3 11" />
-        </svg>
-      ),
-    },
-  ]
-
-  return (
-    <div className="fixed inset-0 z-[3000] flex items-end justify-center" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/30" />
-      <div
-        className="relative w-full max-w-[430px] bg-[#FDFAF5] rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.2)] pb-8 pt-4 px-5"
-        onClick={e => e.stopPropagation()}
-      >
-        <div className="flex justify-center mb-4">
-          <div className="w-10 h-1 bg-[#E8E2D8] rounded-full" />
-        </div>
-        <p className="text-xs font-semibold text-[#7A7060] uppercase tracking-wider mb-3">Open directions in…</p>
-        <div className="flex flex-col gap-2">
-          {apps.map(app => (
-            <a
-              key={app.label}
-              href={app.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={onClose}
-              className="flex items-center gap-3 px-4 py-3.5 rounded-2xl border border-[#E8E2D8] text-[#1A1815] font-semibold text-sm active:bg-[#F0EBE0] transition-colors"
-            >
-              {app.icon}
-              {app.label}
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  )
+function openDirections(lat: number, lng: number) {
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent)
+  if (isIOS) {
+    window.open(`maps:?daddr=${lat},${lng}`, '_blank')
+  } else {
+    window.open(`geo:${lat},${lng}?q=${lat},${lng}`, '_blank')
+  }
 }
 
 function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
-  const [showAbout, setShowAbout] = useState(false)
-  const [showNavChooser, setShowNavChooser] = useState(false)
   const distKm = getDistanceKm(cafe.lat, cafe.lng)
   const travel = getTravelTimes(distKm)
   const featureIcons = getCafeFeatureIcons(cafe)
@@ -268,7 +210,6 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
   const distLabel = distKm < 1 ? `${Math.round(distKm * 1000)} m` : `${distKm.toFixed(1)} km`
 
   return (
-    <>
     <div className="absolute bottom-0 left-0 right-0 z-[2000] bg-[#FDFAF5] rounded-t-3xl shadow-[0_-8px_40px_rgba(0,0,0,0.18)] animate-slide-up max-h-[75vh] overflow-y-auto">
       {/* Handle */}
       <div className="flex justify-center pt-3 pb-1 sticky top-0 bg-[#FDFAF5] z-10">
@@ -313,7 +254,7 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
         {/* Actions — primary first, secondary below */}
         <div className="flex flex-col gap-2 mb-5">
           <button
-            onClick={() => setShowNavChooser(true)}
+            onClick={() => openDirections(cafe.lat, cafe.lng)}
             className="w-full flex items-center justify-center gap-2 bg-[#1A1815] text-[#FDFAF5] font-semibold text-sm py-3.5 rounded-full active:scale-95 transition-transform"
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -321,32 +262,17 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
             </svg>
             Directions
           </button>
-          <div className="flex gap-2">
-            <button
-              onClick={onSave}
-              className={`flex-1 flex items-center justify-center gap-2 font-semibold text-sm py-3 rounded-full active:scale-95 transition-all border ${
-                isSaved ? 'bg-[#E6C828] border-[#E6C828] text-[#1A1815]' : 'border-[#E8E2D8] text-[#1A1815]'
-              }`}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill={isSaved ? '#000' : 'none'} stroke={isSaved ? '#000' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
-              </svg>
-              {isSaved ? 'Saved' : 'Save'}
-            </button>
-            <button
-              onClick={() => setShowAbout(v => !v)}
-              className={`flex-1 flex items-center justify-center gap-2 text-sm py-3 rounded-full active:scale-95 transition-all ${
-                showAbout ? 'font-semibold text-[#1A1815]' : 'font-medium text-[#7A7060]'
-              }`}
-            >
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
-              About
-            </button>
-          </div>
+          <button
+            onClick={onSave}
+            className={`w-full flex items-center justify-center gap-2 font-semibold text-sm py-3 rounded-full active:scale-95 transition-all border ${
+              isSaved ? 'bg-[#E6C828] border-[#E6C828] text-[#1A1815]' : 'border-[#E8E2D8] text-[#1A1815]'
+            }`}
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill={isSaved ? '#000' : 'none'} stroke={isSaved ? '#000' : 'currentColor'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" />
+            </svg>
+            {isSaved ? 'Saved' : 'Save'}
+          </button>
         </div>
 
         <div className="h-px bg-[#f0f0f0] mb-4" />
@@ -412,34 +338,28 @@ function CafeBottomSheet({ cafe, isSaved, onSave, onClose }: SheetProps) {
           </div>
         </div>
 
-        {/* About section */}
-        {showAbout && (
-          <div className="flex flex-col gap-4 pt-4 mt-4 border-t border-[#f0f0f0]">
-            {ABOUT_LABELS.map(({ key, label }) => {
-              const items = cafe.about[key]
-              if (!items || items.length === 0) return null
-              return (
-                <div key={key}>
-                  <p className="text-[#7A7060] text-[11px] font-semibold uppercase tracking-wider mb-2">{label}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {items.map(item => (
-                      <span key={item} className="text-xs bg-[#F0EBE0] border border-[#E8E2D8] text-[#1A1815] px-3 py-1 rounded-full">
-                        {item}
-                      </span>
-                    ))}
-                  </div>
+        {/* About section — always visible, scroll to see */}
+        <div className="flex flex-col gap-4 pt-4 mt-4 border-t border-[#f0f0f0]">
+          {ABOUT_LABELS.map(({ key, label }) => {
+            const items = cafe.about[key]
+            if (!items || items.length === 0) return null
+            return (
+              <div key={key}>
+                <p className="text-[#7A7060] text-[11px] font-semibold uppercase tracking-wider mb-2">{label}</p>
+                <div className="flex flex-wrap gap-2">
+                  {items.map(item => (
+                    <span key={item} className="text-xs bg-[#F0EBE0] border border-[#E8E2D8] text-[#1A1815] px-3 py-1 rounded-full">
+                      {item}
+                    </span>
+                  ))}
                 </div>
-              )
-            })}
-          </div>
-        )}
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
 
-    {showNavChooser && (
-      <NavChooser lat={cafe.lat} lng={cafe.lng} onClose={() => setShowNavChooser(false)} />
-    )}
-    </>
   )
 }
 

@@ -22,6 +22,23 @@ const CafeIcon = ({ active }: { active: boolean }) => (
   </svg>
 )
 
+const ScanIcon = ({ active }: { active: boolean }) => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+    stroke={active ? '#1A1815' : 'rgba(255,255,255,0.6)'}
+    strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="3" y="3" width="7" height="7" rx="1"/>
+    <rect x="14" y="3" width="7" height="7" rx="1"/>
+    <rect x="3" y="14" width="7" height="7" rx="1"/>
+    <line x1="14" y1="14" x2="14" y2="14.01"/>
+    <line x1="14" y1="17" x2="17" y2="17"/>
+    <line x1="17" y1="14" x2="17" y2="14.01"/>
+    <line x1="20" y1="17" x2="20" y2="17.01"/>
+    <line x1="20" y1="14" x2="20" y2="14.01"/>
+    <line x1="17" y1="20" x2="17" y2="20.01"/>
+    <line x1="20" y1="20" x2="20" y2="20.01"/>
+  </svg>
+)
+
 const ProfileIcon = ({ active }: { active: boolean }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
     stroke={active ? '#1A1815' : 'rgba(255,255,255,0.6)'}
@@ -48,6 +65,7 @@ export default function BottomNav() {
   const tabs = [
     { path: '/discover', label: 'Discover', icon: (a: boolean) => <DiscoverIcon active={a} />, stamped: false },
     { path: '/home',     label: 'Cafés',    icon: (a: boolean) => <CafeIcon active={a} />,    stamped: true  },
+    { path: '/scan',     label: 'Scan',     icon: (a: boolean) => <ScanIcon active={a} />,    stamped: false },
     { path: '/profile',  label: 'Profile',  icon: (a: boolean) => <ProfileIcon active={a} />, stamped: true  },
   ]
 

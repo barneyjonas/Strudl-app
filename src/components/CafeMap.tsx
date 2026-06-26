@@ -28,7 +28,7 @@ function makeMarkerIcon(state: MarkerState): L.DivIcon {
   if (state === 'saved') {
     return L.divIcon({
       className: '',
-      html: `<div style="width:26px;height:26px;border-radius:50%;background:#E6C828;border:2.5px solid #FDFAF5;box-shadow:0 3px 10px rgba(0,0,0,0.2);"></div>`,
+      html: `<div style="width:26px;height:26px;border-radius:50%;background:#E6C828;border:2.5px solid #FDFAF5;box-shadow:0 3px 10px rgba(0,0,0,0.2);display:flex;align-items:center;justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="#1A1815" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>`,
       iconSize: [26, 26],
       iconAnchor: [13, 13],
       popupAnchor: [0, -16],
