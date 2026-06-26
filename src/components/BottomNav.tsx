@@ -46,9 +46,9 @@ export default function BottomNav() {
   }, [])
 
   const tabs = [
-    { path: '/discover', label: 'Discover', icon: (a: boolean) => <DiscoverIcon active={a} /> },
-    { path: '/home',     label: 'Cafés',    icon: (a: boolean) => <CafeIcon active={a} /> },
-    { path: '/profile',  label: 'Profile',  icon: (a: boolean) => <ProfileIcon active={a} /> },
+    { path: '/discover', label: 'Discover', icon: (a: boolean) => <DiscoverIcon active={a} />, stamped: false },
+    { path: '/home',     label: 'Cafés',    icon: (a: boolean) => <CafeIcon active={a} />,    stamped: true  },
+    { path: '/profile',  label: 'Profile',  icon: (a: boolean) => <ProfileIcon active={a} />, stamped: true  },
   ]
 
   return (
@@ -66,14 +66,17 @@ export default function BottomNav() {
       <div className="flex items-center bg-[#1A1815] rounded-full p-1.5 gap-0.5 shadow-[0_8px_32px_rgba(0,0,0,0.36),0_2px_8px_rgba(0,0,0,0.18)]">
         {tabs.map((tab) => {
           const isActive = path === tab.path
+          const bgClass = isActive
+            ? 'bg-[#E6C828]'
+            : tab.stamped
+              ? 'bg-[rgba(255,255,255,0.06)] border border-[rgba(255,255,255,0.10)]'
+              : 'bg-transparent'
           return (
             <button
               key={tab.path}
               onClick={() => navigate(tab.path)}
               aria-label={tab.label}
-              className={`w-[60px] h-12 flex flex-col items-center justify-center rounded-full transition-all duration-200 active:scale-90 ${
-                isActive ? 'bg-[#E6C828]' : 'bg-transparent'
-              }`}
+              className={`w-[60px] h-12 flex flex-col items-center justify-center rounded-full transition-all duration-200 active:scale-90 ${bgClass}`}
             >
               {tab.icon(isActive)}
             </button>
