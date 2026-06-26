@@ -20,7 +20,7 @@ function SimpleQR() {
     <div className="bg-[#FDFAF5] rounded-2xl p-4 inline-block border border-[#E8E2D8]">
       <div className="grid gap-0.5" style={{ gridTemplateColumns: 'repeat(7, 1fr)' }}>
         {grid.flat().map((filled, i) => (
-          <div key={i} className={`w-6 h-6 rounded-sm ${filled ? 'bg-[#1A1815]' : 'bg-white'}`} />
+          <div key={i} className={`w-6 h-6 rounded-sm ${filled ? 'bg-[#1A1815]' : 'bg-[#FDFAF5]'}`} />
         ))}
       </div>
     </div>

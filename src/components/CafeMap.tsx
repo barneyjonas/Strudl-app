@@ -19,7 +19,7 @@ function makeMarkerIcon(state: MarkerState): L.DivIcon {
   if (state === 'discoverable') {
     return L.divIcon({
       className: '',
-      html: `<div style="width:22px;height:22px;border-radius:50%;background:#fff;border:1.5px solid #0f0f0f;box-shadow:0 2px 8px rgba(0,0,0,0.18);"></div>`,
+      html: `<div style="width:22px;height:22px;border-radius:50%;background:#FDFAF5;border:1.5px solid #1A1815;box-shadow:0 2px 8px rgba(0,0,0,0.18);"></div>`,
       iconSize: [22, 22],
       iconAnchor: [11, 11],
       popupAnchor: [0, -14],
@@ -28,7 +28,7 @@ function makeMarkerIcon(state: MarkerState): L.DivIcon {
   if (state === 'saved') {
     return L.divIcon({
       className: '',
-      html: `<div style="width:26px;height:26px;border-radius:50%;background:#E6C828;border:2.5px solid #fff;box-shadow:0 3px 10px rgba(0,0,0,0.2);"></div>`,
+      html: `<div style="width:26px;height:26px;border-radius:50%;background:#E6C828;border:2.5px solid #FDFAF5;box-shadow:0 3px 10px rgba(0,0,0,0.2);"></div>`,
       iconSize: [26, 26],
       iconAnchor: [13, 13],
       popupAnchor: [0, -16],
@@ -36,7 +36,7 @@ function makeMarkerIcon(state: MarkerState): L.DivIcon {
   }
   return L.divIcon({
     className: '',
-    html: `<div style="width:34px;height:34px;border-radius:10px;background:#E6C828;border:2px solid rgba(255,255,255,0.8);box-shadow:0 4px 14px rgba(0,0,0,0.22);display:flex;align-items:center;justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#0f0f0f" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>`,
+    html: `<div style="width:34px;height:34px;border-radius:10px;background:#E6C828;border:2px solid rgba(253,250,245,0.8);box-shadow:0 4px 14px rgba(0,0,0,0.22);display:flex;align-items:center;justify-content:center;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="#1A1815" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>`,
     iconSize: [34, 34],
     iconAnchor: [17, 17],
     popupAnchor: [0, -20],
@@ -143,18 +143,18 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
     circle10Ref.current = L.circle([DEFAULT_LAT, DEFAULT_LNG], { radius: 800, ...circleStyle }).addTo(map)
 
     const labelStyle = 'background:transparent;border:none;box-shadow:none;font-size:11px;font-weight:600;color:#E6C828;white-space:nowrap;'
-    label5Ref.current = L.marker([DEFAULT_LAT + 0.0036, DEFAULT_LNG], {
+    label5Ref.current = L.marker([DEFAULT_LAT + 0.0044, DEFAULT_LNG], {
       icon: L.divIcon({ className: '', html: `<span style="${labelStyle}">5 Min</span>`, iconAnchor: [20, 6] }),
       interactive: false,
     }).addTo(map)
-    label10Ref.current = L.marker([DEFAULT_LAT + 0.0072, DEFAULT_LNG], {
+    label10Ref.current = L.marker([DEFAULT_LAT + 0.0083, DEFAULT_LNG], {
       icon: L.divIcon({ className: '', html: `<span style="${labelStyle}">10 Min</span>`, iconAnchor: [24, 6] }),
       interactive: false,
     }).addTo(map)
 
     userDotRef.current = L.circleMarker([DEFAULT_LAT, DEFAULT_LNG], {
       radius: 8,
-      color: '#fff',
+      color: '#FDFAF5',
       weight: 2.5,
       fillColor: '#3b82f6',
       fillOpacity: 1,
@@ -170,8 +170,8 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
           userDotRef.current?.setLatLng([lat, lng])
           circle5Ref.current?.setLatLng([lat, lng])
           circle10Ref.current?.setLatLng([lat, lng])
-          label5Ref.current?.setLatLng([lat + 0.0036, lng])
-          label10Ref.current?.setLatLng([lat + 0.0072, lng])
+          label5Ref.current?.setLatLng([lat + 0.0044, lng])
+          label10Ref.current?.setLatLng([lat + 0.0083, lng])
           map.flyTo([lat, lng], 15, { duration: 1.5 })
         },
         () => { /* permission denied — keep Vienna default */ },
@@ -270,7 +270,7 @@ export default function CafeMap({ loyalCafeNames, savedCafeIds = [], onSaveToggl
         </svg>
       </button>
       {toast && (
-        <div className="absolute bottom-[80px] left-1/2 -translate-x-1/2 bg-[#0f0f0f] text-white text-xs px-4 py-2 rounded-full z-[2000] whitespace-nowrap pointer-events-none">
+        <div className="absolute bottom-[80px] left-1/2 -translate-x-1/2 bg-[#1A1815] text-[#FDFAF5] text-xs px-4 py-2 rounded-full z-[2000] whitespace-nowrap pointer-events-none">
           {toast}
         </div>
       )}

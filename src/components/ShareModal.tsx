@@ -298,7 +298,7 @@ export default function ShareModal({ open, onClose, favoriteCafes, userName }: P
                   copied ? 'bg-[#E6C828] border-[#E6C828]' : 'bg-[#F0EBE0] border-[#E8E2D8]'
                 }`}>
                   {copied
-                    ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                    ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1815" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
                     : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1A1815" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71" />
                         <path d="M14 11a5 5 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71" />

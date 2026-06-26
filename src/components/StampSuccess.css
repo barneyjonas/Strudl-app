@@ -31,7 +31,7 @@
 
 /* ── Count number glows terracotta then settles to neutral ── */
 @keyframes ss-count-glow {
-  0%, 40% { color: #D97706; }
+  0%, 40% { color: #E6C828; }
   100%    { color: #6b7280; }
 }
 
@@ -65,7 +65,7 @@
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  border: 2px solid #D97706;
+  border: 2px solid #E6C828;
   opacity: 0;
   pointer-events: none;
   animation: ss-ring 600ms ease-out 1.2s both;
